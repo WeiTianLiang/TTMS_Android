@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.wtl.ttms_hdd.HDDMain.view.Activity.MainActivity">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/HDDtoptitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorHeight="2dp"
+        app:tabGravity="center"
+        app:tabIndicatorColor="#f9c355"
+        app:tabSelectedTextColor="#f9c355"
+        app:tabTextColor="#b9b9b9"
+        app:tabTextAppearance="@style/TabLayoutSize"/>
+
+    <FrameLayout
+        android:id="@+id/framelayout_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/HDDtoptitle"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/HDDviewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/framelayout_card"/>
+
+</RelativeLayout>
