@@ -105,13 +105,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 /*
                 * 处理登陆
                 * */
-//                if(compl==null) {compl = new LoginPresenterCompl(this);}
-//                compl.doLogin(input_account.getText().toString(),input_password.getText().toString()
-//                        ,input_validate.getText().toString());
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
+                if(compl==null) {compl = new LoginPresenterCompl(this);}
+                compl.doLogin(input_account.getText().toString(),input_password.getText().toString()
+                        ,input_validate.getText().toString());
+//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//                overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
 
 
                 break;

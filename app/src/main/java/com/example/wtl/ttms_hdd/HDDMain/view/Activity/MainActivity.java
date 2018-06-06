@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         HDDviewpager = findViewById(R.id.HDDviewpager);
 
         fragmentList.add(new FilmSellFragment());
-        stringList.add("购票");
+        stringList.add("影片");
 
         if(presenter == null) {
             presenter = new HDDMainPresenterCompl(this);

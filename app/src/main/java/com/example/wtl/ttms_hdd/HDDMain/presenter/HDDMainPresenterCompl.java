@@ -28,6 +28,9 @@ public class HDDMainPresenterCompl implements IHDDMainPresenter {
         List<FileModel> list = new ArrayList<>();
         FileModel model = new FileModel(R.drawable.ceshi, "123", "asd", "9.0");
         list.add(model);
+        list.add(model);
+        list.add(model);
+        list.add(model);
         return list;
     }
 

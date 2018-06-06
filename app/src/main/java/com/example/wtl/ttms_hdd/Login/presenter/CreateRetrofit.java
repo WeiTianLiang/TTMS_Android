@@ -15,7 +15,7 @@ public class CreateRetrofit {
         * 创建Retrofit对象
         * */
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://123.206.82.241")
+                .baseUrl("http://123.206.82.241:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         /*

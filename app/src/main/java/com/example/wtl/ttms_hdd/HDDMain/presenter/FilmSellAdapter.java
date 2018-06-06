@@ -1,6 +1,8 @@
 package com.example.wtl.ttms_hdd.HDDMain.presenter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.wtl.ttms_hdd.BuyTicket.view.BuyTicketActivity;
 import com.example.wtl.ttms_hdd.HDDMain.model.FileModel;
 import com.example.wtl.ttms_hdd.HDDMain.model.IFile;
+import com.example.wtl.ttms_hdd.HDDMain.view.Activity.MainActivity;
 import com.example.wtl.ttms_hdd.R;
 
 import java.util.List;
@@ -50,6 +54,9 @@ public class FilmSellAdapter extends RecyclerView.Adapter<FilmSellAdapter.ViewHo
                 /*
                 * 跳转详情销售
                 * */
+                Intent intent = new Intent(context, BuyTicketActivity.class);
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
             }
         });
         holder.jump_buy2.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +65,9 @@ public class FilmSellAdapter extends RecyclerView.Adapter<FilmSellAdapter.ViewHo
                 /*
                 * 跳转详情销售
                 * */
+                Intent intent = new Intent(context, BuyTicketActivity.class);
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
             }
         });
     }

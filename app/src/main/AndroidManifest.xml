@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wtl.ttms_hdd">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".HDDMain.view.Activity.MainActivity" />
         <activity android:name=".Register.view.RegisterActivity" />
+        <activity android:name=".BuyTicket.view.BuyTicketActivity"></activity>
     </application>
 
 </manifest>

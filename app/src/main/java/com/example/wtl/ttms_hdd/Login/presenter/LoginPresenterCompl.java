@@ -15,14 +15,20 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.wtl.ttms_hdd.HDDMain.view.Activity.MainActivity;
+import com.example.wtl.ttms_hdd.Login.model.LoginResultModel;
 import com.example.wtl.ttms_hdd.Login.model.UserModel;
 import com.example.wtl.ttms_hdd.Login.model.ValidateModel;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Register.view.RegisterActivity;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,18 +58,24 @@ public class LoginPresenterCompl implements ILoginPresenter {
             loginMap.put("account",account);
             loginMap.put("password",password);
             loginMap.put("verCode",verCode);
+            Log.e("qweqweqw",loginMap.get("account")+"  "+loginMap.get("password")+"   "+loginMap.get("verCode"));
             /*
             * 发送请求
             * */
-            Call<UserModel> call = CreateRetrofit.requestRetrofit().postUser(loginMap);
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(loginMap);
+            Log.e("adasdada",jsonData);
+            RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonData);
+            Call<LoginResultModel> call = CreateRetrofit.requestRetrofit().postUser(body);
             /*
             * 异步网络请求
             * */
-            call.enqueue(new Callback<UserModel>() {
+            call.enqueue(new Callback<LoginResultModel>() {
                 @Override
-                public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                public void onResponse(Call<LoginResultModel> call, Response<LoginResultModel> response) {
                     if (response.isSuccessful()) {
                         if(response.body()!=null) {
+                            Log.e("登陆返回：",response.body().getMsg());
                             Intent intent = new Intent(context, MainActivity.class);
                             context.startActivity(intent);
                             ((Activity) context).finish();
@@ -79,7 +91,7 @@ public class LoginPresenterCompl implements ILoginPresenter {
                 }
 
                 @Override
-                public void onFailure(Call<UserModel> call, Throwable t) {
+                public void onFailure(Call<LoginResultModel> call, Throwable t) {
                     Log.e("onFailure", t.getMessage() + "失败");
                 }
             });
