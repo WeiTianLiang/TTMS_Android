@@ -22,12 +22,6 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
     }
 
     @Override
-    public void doback() {
-        ((Activity) context).finish();
-        ((Activity) context).overridePendingTransition(R.anim.activity_right_out, R.anim.activity_right_in);
-    }
-
-    @Override
     public void showDetail(ImageView image, TextView text) {
         if(image.getDrawable().getCurrent().getConstantState().
                 equals(context.getResources().getDrawable(R.mipmap.down).getConstantState())) {

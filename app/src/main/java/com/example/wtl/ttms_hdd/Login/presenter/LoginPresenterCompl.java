@@ -16,13 +16,10 @@ import android.widget.Toast;
 
 import com.example.wtl.ttms_hdd.HDDMain.view.Activity.MainActivity;
 import com.example.wtl.ttms_hdd.Login.model.LoginResultModel;
-import com.example.wtl.ttms_hdd.Login.model.UserModel;
 import com.example.wtl.ttms_hdd.Login.model.ValidateModel;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Register.view.RegisterActivity;
 import com.google.gson.Gson;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +29,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * 登陆业务逻辑层
@@ -48,25 +43,36 @@ public class LoginPresenterCompl implements ILoginPresenter {
     public LoginPresenterCompl(Context context) {
         this.context = context;
     }
+    /**
+    * 获取服务器发来的请求头
+    * */
+    private String sessionId = null;
 
     @Override
     public void doLogin(String account, String password, String verCode) {
         if (account.equals("") || password.equals("") || verCode.equals("")) {
             Toast.makeText(context, "登陆失败!账号/密码/验证码错误!", Toast.LENGTH_SHORT).show();
         } else {
+            /*
+            * 将数据封装成map
+            * */
             Map<String, String> loginMap = new HashMap<>();
             loginMap.put("account",account);
             loginMap.put("password",password);
             loginMap.put("verCode",verCode);
-            Log.e("qweqweqw",loginMap.get("account")+"  "+loginMap.get("password")+"   "+loginMap.get("verCode"));
             /*
-            * 发送请求
+            * 将map封装成json数据
             * */
             Gson gson = new Gson();
             String jsonData = gson.toJson(loginMap);
-            Log.e("adasdada",jsonData);
+            /*
+            * 创建数据body
+            * */
             RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonData);
-            Call<LoginResultModel> call = CreateRetrofit.requestRetrofit().postUser(body);
+            /*
+            * 向服务器发送数据
+            * */
+            Call<LoginResultModel> call = CreateRetrofit.requestRetrofit(sessionId).postUser(body);
             /*
             * 异步网络请求
             * */
@@ -75,18 +81,21 @@ public class LoginPresenterCompl implements ILoginPresenter {
                 public void onResponse(Call<LoginResultModel> call, Response<LoginResultModel> response) {
                     if (response.isSuccessful()) {
                         if(response.body()!=null) {
-                            Log.e("登陆返回：",response.body().getMsg());
-                            Intent intent = new Intent(context, MainActivity.class);
-                            context.startActivity(intent);
-                            ((Activity) context).finish();
-                            ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
+                            if(response.body().getResult()==200 && response.body().getMsg().equals("successful")) {
+                                Intent intent = new Intent(context, MainActivity.class);
+                                context.startActivity(intent);
+                                ((Activity) context).finish();
+                                ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
+                            } else {
+                                Toast.makeText(context, "登陆失败!!!", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Log.e("onFailure", "请求数据为空");
                             Toast.makeText(context, "登陆失败!账号,密码,验证码错误!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Log.e("onFailure", "请求失败");
-                        Toast.makeText(context, "登陆失败!请检查您的网络!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "登陆失败!!!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -145,14 +154,18 @@ public class LoginPresenterCompl implements ILoginPresenter {
         /*
         * 发送请求
         * */
-        Call<ValidateModel> call = CreateRetrofit.requestRetrofit().getValidate();
+        Call<ValidateModel> call = CreateRetrofit.requestRetrofit(sessionId).getValidate();
         /*
         * 异步网络请求
         * */
         call.enqueue(new Callback<ValidateModel>() {
             @Override
             public void onResponse(Call<ValidateModel> call, Response<ValidateModel> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body()!=null) {
+                    /*
+                    * 从请求头获取用户cookie
+                    * */
+                    sessionId = response.headers().get("Set-Cookie");
                     ValidateModel validate = response.body();
                     if (validate != null) {
                         byte[] arry = Base64.decode(validate.getBase64(), Base64.DEFAULT);

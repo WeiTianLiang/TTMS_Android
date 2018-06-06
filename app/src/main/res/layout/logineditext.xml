@@ -119,7 +119,8 @@
             android:inputType="textPassword"
             android:padding="10dp"
             android:textCursorDrawable="@drawable/cursorcolor"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:digits="1234567890." />
 
         <ImageView
             android:id="@+id/get_validate"

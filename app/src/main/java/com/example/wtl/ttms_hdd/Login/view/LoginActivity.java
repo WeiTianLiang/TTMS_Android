@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ import com.example.wtl.ttms_hdd.Register.view.RegisterActivity;
  * 登陆界面实现
  * Created by WTL on 2018/6/4.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
      * 监护账户输入
@@ -69,15 +70,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Montior();
-        if(compl==null) {compl = new LoginPresenterCompl(this);}
-        compl.addTextEdit(input_account,clear_account);
-        compl.addTextEdit(input_password,clear_password);
+        if (compl == null) {
+            compl = new LoginPresenterCompl(this);
+        }
+        compl.addTextEdit(input_account, clear_account);
+        compl.addTextEdit(input_password, clear_password);
         compl.showValidate(get_validate);
     }
 
     /**
-    * 连接界面
-    * */
+     * 连接界面
+     */
     private void Montior() {
         input_account = findViewById(R.id.input_account);
         input_password = findViewById(R.id.input_password);
@@ -96,6 +99,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         clear_password.setOnClickListener(this);
         get_validate.setOnClickListener(this);
         input_validate.setOnClickListener(this);
+
+        input_validate.setInputType(EditorInfo.TYPE_CLASS_PHONE);
     }
 
     @Override
@@ -105,15 +110,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 /*
                 * 处理登陆
                 * */
-                if(compl==null) {compl = new LoginPresenterCompl(this);}
-                compl.doLogin(input_account.getText().toString(),input_password.getText().toString()
-                        ,input_validate.getText().toString());
-//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//                overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
-
-
+                if (compl == null) {
+                    compl = new LoginPresenterCompl(this);
+                }
+                compl.doLogin(input_account.getText().toString(), input_password.getText().toString()
+                        , input_validate.getText().toString());
                 break;
             case R.id.forgot_password:
                 /*
@@ -124,21 +125,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 /*
                 * 处理注册
                 * */
-                if(compl==null) {compl = new LoginPresenterCompl(this);}
+                if (compl == null) {
+                    compl = new LoginPresenterCompl(this);
+                }
                 compl.doRegister();
                 break;
             case R.id.clear_account:
                 /*
                 * 清空账号
                 * */
-                if(compl==null) {compl = new LoginPresenterCompl(this);}
+                if (compl == null) {
+                    compl = new LoginPresenterCompl(this);
+                }
                 compl.clear(input_account);
                 break;
             case R.id.clear_password:
                 /*
                 * 清空密码
                 * */
-                if(compl==null) {compl = new LoginPresenterCompl(this);}
+                if (compl == null) {
+                    compl = new LoginPresenterCompl(this);
+                }
                 compl.clear(input_password);
                 break;
         }

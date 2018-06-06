@@ -11,10 +11,6 @@ import android.widget.TextView;
 public interface IBuyTicketPresenter {
 
     /**
-    * 返回接口
-    * */
-    void doback();
-    /**
     * 展示详情
     * */
     void showDetail(ImageView image,TextView text);

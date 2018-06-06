@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.wtl.ttms_hdd.BuyTicket.presenter.BuyTicketPresentCompl;
 import com.example.wtl.ttms_hdd.BuyTicket.presenter.IBuyTicketPresenter;
 import com.example.wtl.ttms_hdd.R;
@@ -30,9 +31,9 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
      * */
     private TextView buy_score;
     /**
-     * 演员
+     * 类型
      * */
-    private TextView buy_actors;
+    private TextView buy_type;
     /**
      * 导演
      * */
@@ -66,9 +67,12 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
 
     private void Montior() {
         ticket_img = findViewById(R.id.ticket_img);
+        Glide.with(this)
+                .load("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=178339431,3551923999&fm=27&gp=0.jpg")
+                .into(ticket_img);
         buy_name = findViewById(R.id.buy_name);
         buy_score = findViewById(R.id.buy_score);
-        buy_actors = findViewById(R.id.buy_actors);
+        buy_type = findViewById(R.id.buy_type);
         buy_director = findViewById(R.id.buy_director);
         go_details = findViewById(R.id.go_details);
         this_details = findViewById(R.id.this_details);
@@ -84,10 +88,9 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buyback:
-                if(presenter == null) {
-                    presenter = new BuyTicketPresentCompl(this);
-                }
-                presenter.doback();
+                finish();
+                overridePendingTransition(R.anim.activity_right_out, R.anim.activity_right_in);
+                break;
             case R.id.go_details:
                 if(presenter == null) {
                     presenter = new BuyTicketPresentCompl(this);
@@ -104,10 +107,8 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(presenter == null) {
-            presenter = new BuyTicketPresentCompl(this);
-        }
-        presenter.doback();
+        finish();
+        overridePendingTransition(R.anim.activity_right_out, R.anim.activity_right_in);
         return super.onKeyDown(keyCode, event);
     }
 }

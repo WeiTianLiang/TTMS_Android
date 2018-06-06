@@ -1,5 +1,7 @@
 package com.example.wtl.ttms_hdd.Login.presenter;
 
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -10,14 +12,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreateRetrofit {
 
-    public static GetRequest_Interface requestRetrofit() {
+    public static GetRequest_Interface requestRetrofit(String str) {
+        CookieManager manager = new CookieManager();
+        manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+        Retrofit retrofit = null;
         /*
         * 创建Retrofit对象
         * */
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://123.206.82.241:8080")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        if(str!=null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl("http://123.206.82.241:8080")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(AddHeader.addHeadersClient(str))
+                    .build();
+        } else {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl("http://123.206.82.241:8080")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
         /*
         * 实例化
         * */

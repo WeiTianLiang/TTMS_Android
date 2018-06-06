@@ -32,27 +32,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:background="#3c3c3c">
+        android:background="#3c3c3c"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/ticket_img"
             android:layout_width="110dp"
             android:layout_height="150dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:id="@+id/film_details"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:orientation="vertical"
-            android:layout_toRightOf="@+id/ticket_img"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginRight="15dp">
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/ticket_img"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/buy_name"
@@ -61,46 +62,52 @@
                 android:text="超时空同居"
                 android:textColor="#fff"
                 android:textSize="22sp"
-                android:paddingBottom="3dp"
-                android:paddingTop="3dp"/>
+                android:layout_weight="2"/>
 
             <TextView
                 android:id="@+id/buy_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="8.9"
-                android:textSize="20sp"
                 android:textColor="#ffc16f"
-                android:paddingBottom="3dp"
-                android:paddingTop="3dp"/>
+                android:textSize="21sp"
+                android:layout_weight="2"/>
 
             <TextView
-                android:id="@+id/buy_actors"
+                android:id="@+id/buy_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="戏剧,爱情,恐怖,非主流"
-                android:textSize="18sp"
                 android:textColor="#fff"
-                android:paddingBottom="3dp"
-                android:paddingTop="3dp"/>
+                android:textSize="16sp"
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/buy_director"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="斯蒂芬乔布斯拖拉机"
-                android:textSize="18sp"
                 android:textColor="#fff"
-                android:paddingBottom="3dp"
-                android:paddingTop="3dp"/>
+                android:textSize="16sp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buy_actors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="李佳伟 苍井空"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:layout_weight="1"/>
 
             <ImageView
                 android:id="@+id/go_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:layout_gravity="center"
-                android:src="@mipmap/down"/>
+                android:padding="5dp"
+                android:src="@mipmap/down"
+                android:layout_weight="1" />
 
         </LinearLayout>
 
@@ -111,27 +118,27 @@
             android:layout_below="@+id/ticket_img"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:textColor="#fff"
             android:text="kalshfkjashdkfhkalsdhfjlkashdlkfhaklsdjhfklhaskdhfklashdjkfhlkashdfkjhakshdfklhaslkdhfjashdkfjhaskdfjds"
+            android:textColor="#fff"
             android:textSize="18sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/ticket_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/this_details"
-            android:background="@drawable/buyticketground"
-            android:text="评分"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:textSize="18sp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"/>
+            android:background="@drawable/buyticketground"
+            android:gravity="center"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp"
+            android:text="评分"
+            android:textColor="#fff"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
