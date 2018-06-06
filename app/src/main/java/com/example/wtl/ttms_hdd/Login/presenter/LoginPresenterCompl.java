@@ -15,10 +15,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.wtl.ttms_hdd.HDDMain.view.Activity.MainActivity;
-import com.example.wtl.ttms_hdd.Login.model.LoginResultModel;
+import com.example.wtl.ttms_hdd.Tool.ResultModel;
 import com.example.wtl.ttms_hdd.Login.model.ValidateModel;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Register.view.RegisterActivity;
+import com.example.wtl.ttms_hdd.Tool.CreateRetrofit;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -43,10 +44,11 @@ public class LoginPresenterCompl implements ILoginPresenter {
     public LoginPresenterCompl(Context context) {
         this.context = context;
     }
+
     /**
-    * 获取服务器发来的请求头
-    * */
-    private String sessionId = null;
+     * 获取服务器发来的请求头
+     */
+    public static String sessionId = null;
 
     @Override
     public void doLogin(String account, String password, String verCode) {
@@ -57,14 +59,15 @@ public class LoginPresenterCompl implements ILoginPresenter {
             * 将数据封装成map
             * */
             Map<String, String> loginMap = new HashMap<>();
-            loginMap.put("account",account);
-            loginMap.put("password",password);
-            loginMap.put("verCode",verCode);
+            loginMap.put("account", account);
+            loginMap.put("password", password);
+            loginMap.put("verCode", verCode);
             /*
             * 将map封装成json数据
             * */
             Gson gson = new Gson();
             String jsonData = gson.toJson(loginMap);
+            Log.d("asdasdsa",jsonData);
             /*
             * 创建数据body
             * */
@@ -72,16 +75,19 @@ public class LoginPresenterCompl implements ILoginPresenter {
             /*
             * 向服务器发送数据
             * */
-            Call<LoginResultModel> call = CreateRetrofit.requestRetrofit(sessionId).postUser(body);
+            final GetLogin_Interface request = CreateRetrofit.requestRetrofit(sessionId).create(GetLogin_Interface.class);
+            Call<ResultModel> call = request.postUser(body);
             /*
             * 异步网络请求
             * */
-            call.enqueue(new Callback<LoginResultModel>() {
+            call.enqueue(new Callback<ResultModel>() {
                 @Override
-                public void onResponse(Call<LoginResultModel> call, Response<LoginResultModel> response) {
+                public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
                     if (response.isSuccessful()) {
-                        if(response.body()!=null) {
-                            if(response.body().getResult()==200 && response.body().getMsg().equals("successful")) {
+                        if (response.body() != null) {
+                            Log.e("asdasdsa",response.body().getResult()+"");
+                            Log.e("asdasdsa",response.body().getMsg());
+                            if (response.body().getResult() == 200 && response.body().getMsg().equals("successful")) {
                                 Intent intent = new Intent(context, MainActivity.class);
                                 context.startActivity(intent);
                                 ((Activity) context).finish();
@@ -90,17 +96,15 @@ public class LoginPresenterCompl implements ILoginPresenter {
                                 Toast.makeText(context, "登陆失败!!!", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Log.e("onFailure", "请求数据为空");
                             Toast.makeText(context, "登陆失败!账号,密码,验证码错误!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Log.e("onFailure", "请求失败");
                         Toast.makeText(context, "登陆失败!!!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<LoginResultModel> call, Throwable t) {
+                public void onFailure(Call<ResultModel> call, Throwable t) {
                     Log.e("onFailure", t.getMessage() + "失败");
                 }
             });
@@ -154,14 +158,15 @@ public class LoginPresenterCompl implements ILoginPresenter {
         /*
         * 发送请求
         * */
-        Call<ValidateModel> call = CreateRetrofit.requestRetrofit(sessionId).getValidate();
+        GetLogin_Interface request = CreateRetrofit.requestRetrofit(sessionId).create(GetLogin_Interface.class);
+        Call<ValidateModel> call = request.getValidate();
         /*
         * 异步网络请求
         * */
         call.enqueue(new Callback<ValidateModel>() {
             @Override
             public void onResponse(Call<ValidateModel> call, Response<ValidateModel> response) {
-                if (response.isSuccessful() && response.body()!=null) {
+                if (response.isSuccessful() && response.body() != null) {
                     /*
                     * 从请求头获取用户cookie
                     * */

@@ -1,12 +1,16 @@
 package com.example.wtl.ttms_hdd.Register.view;
 
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,52 +18,69 @@ import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Register.presenter.IRegisterPresenter;
 import com.example.wtl.ttms_hdd.Register.presenter.RegisterPresenterCompl;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
-    * 返回
-    * */
+     * 返回
+     */
     private ImageView register_back;
     /**
+     * 注册电话号
+     */
+    private EditText register_input_phone;
+    /**
+     * 注册姓名
+     */
+    private EditText register_input_name;
+    /**
      * 注册账号
-     * */
+     */
     private EditText register_input_account;
     /**
      * 注册密码
-     * */
+     */
     private EditText register_input_password;
     /**
      * 重复密码
-     * */
+     */
     private EditText repeat_input_password;
     /**
-     * 输入验证码
-     * */
-    private EditText input_validate;
-    /**
-     * 发送验证码
-     * */
-    private Button send_validate;
-    /**
      * 清空注册账户
-     * */
+     */
     private ImageView register_clear_account;
     /**
      * 清空注册密码
-     * */
+     */
     private ImageView register_clear_password;
     /**
      * 清空重复密码
-     * */
+     */
     private ImageView repeat_clear_password;
     /**
-    * 注册完成
-    * */
+     * 清空姓名
+     */
+    private ImageView register_clear_name;
+    /**
+     * 清空电话号
+     */
+    private ImageView register_clear_phone;
+    /**
+     * 注册完成
+     */
     private TextView main_register;
     /**
      * 注册接口初始化
-     * */
+     */
     private IRegisterPresenter presenter;
+    /**
+     * 性别单选组
+     */
+    private RadioGroup sex_group;
+    /**
+     * 性别
+     */
+    private String sexString = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,30 +94,48 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         register_input_account = findViewById(R.id.register_input_account);
         register_input_password = findViewById(R.id.register_input_password);
         repeat_input_password = findViewById(R.id.repeat_input_password);
-        input_validate = findViewById(R.id.input_validate);
-        send_validate = findViewById(R.id.send_validate);
         register_clear_account = findViewById(R.id.register_clear_account);
         register_clear_password = findViewById(R.id.register_clear_password);
         repeat_clear_password = findViewById(R.id.repeat_clear_password);
         main_register = findViewById(R.id.main_register);
+        register_input_phone = findViewById(R.id.register_input_phone);
+        register_input_name = findViewById(R.id.register_input_name);
+        register_clear_phone = findViewById(R.id.register_clear_phone);
+        register_clear_name = findViewById(R.id.register_clear_name);
+        sex_group = findViewById(R.id.sex_group);
 
         register_clear_account.setOnClickListener(this);
         register_clear_password.setOnClickListener(this);
         repeat_clear_password.setOnClickListener(this);
-        send_validate.setOnClickListener(this);
         register_back.setOnClickListener(this);
         main_register.setOnClickListener(this);
+        register_clear_name.setOnClickListener(this);
+        register_clear_phone.setOnClickListener(this);
+        sex_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                /*
+                * 获取选择的性别
+                * */
+                RadioButton sex = findViewById(i);
+                sexString = sex.getText().toString();
+            }
+        });
 
-        if(presenter == null) {presenter = new RegisterPresenterCompl(this);}
-        presenter.registerAddTextEdit(register_input_account,register_clear_account);
-        presenter.registerAddTextEdit(register_input_password,register_clear_password);
-        presenter.registerAddTextEdit(repeat_input_password,repeat_clear_password);
+        if (presenter == null) {
+            presenter = new RegisterPresenterCompl(this);
+        }
+        presenter.registerAddTextEdit(register_input_account, register_clear_account);
+        presenter.registerAddTextEdit(register_input_password, register_clear_password);
+        presenter.registerAddTextEdit(repeat_input_password, repeat_clear_password);
+        presenter.registerAddTextEdit(register_input_name, register_clear_name);
+        presenter.registerAddTextEdit(register_input_phone, register_clear_phone);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         finish();
-        overridePendingTransition(R.anim.activity_right_out,R.anim.activity_right_in);
+        overridePendingTransition(R.anim.activity_right_out, R.anim.activity_right_in);
         return super.onKeyDown(keyCode, event);
     }
 
@@ -107,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 /*
                 * 返回
                 * */
-                if(presenter == null) {
+                if (presenter == null) {
                     presenter = new RegisterPresenterCompl(this);
                 }
                 presenter.doBack();
@@ -116,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 /*
                 * 清除
                 * */
-                if(presenter == null) {
+                if (presenter == null) {
                     presenter = new RegisterPresenterCompl(this);
                 }
                 presenter.registerClear(register_input_account);
@@ -125,7 +164,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 /*
                 * 清除
                 * */
-                if(presenter == null) {
+                if (presenter == null) {
                     presenter = new RegisterPresenterCompl(this);
                 }
                 presenter.registerClear(register_input_password);
@@ -134,24 +173,38 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 /*
                 * 清除
                 * */
-                if(presenter == null) {
+                if (presenter == null) {
                     presenter = new RegisterPresenterCompl(this);
                 }
                 presenter.registerClear(repeat_input_password);
                 break;
-            case R.id.send_validate:
+            case R.id.register_clear_phone:
                 /*
-                * 发送验证码
+                * 清除
                 * */
+                if (presenter == null) {
+                    presenter = new RegisterPresenterCompl(this);
+                }
+                presenter.registerClear(register_input_phone);
+                break;
+            case R.id.register_clear_name:
+                /*
+                * 清除
+                * */
+                if (presenter == null) {
+                    presenter = new RegisterPresenterCompl(this);
+                }
+                presenter.registerClear(register_input_name);
                 break;
             case R.id.main_register:
                 /*
                 * 注册
                 * */
-                if(presenter == null) {
+                if (presenter == null) {
                     presenter = new RegisterPresenterCompl(this);
                 }
-                presenter.doBack();
+                presenter.doRegister(register_input_name.getText().toString(),register_input_account.getText().toString()
+                        ,register_input_password.getText().toString(),sexString,register_input_phone.getText().toString());
                 break;
         }
     }

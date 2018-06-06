@@ -1,4 +1,4 @@
-package com.example.wtl.ttms_hdd.Login.presenter;
+package com.example.wtl.ttms_hdd.Tool;
 
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreateRetrofit {
 
-    public static GetRequest_Interface requestRetrofit(String str) {
+    public static Retrofit requestRetrofit(String str) {
         CookieManager manager = new CookieManager();
         manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         Retrofit retrofit = null;
@@ -31,11 +31,7 @@ public class CreateRetrofit {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        /*
-        * 实例化
-        * */
-        GetRequest_Interface request = retrofit.create(GetRequest_Interface.class);
-        return request;
+        return retrofit;
     }
 
 }

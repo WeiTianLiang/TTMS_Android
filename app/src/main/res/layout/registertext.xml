@@ -14,6 +14,50 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/name_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/name" />
+
+        <EditText
+            android:id="@+id/register_input_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/name_img"
+            android:background="#00000000"
+            android:hint="姓名"
+            android:padding="10dp"
+            android:textCursorDrawable="@drawable/cursorcolor"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/register_clear_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/error"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="#cfcfcf" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
             android:id="@+id/acc_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +117,6 @@
             android:layout_toRightOf="@+id/pass_img"
             android:background="#00000000"
             android:hint="密码"
-            android:inputType="textPassword"
             android:padding="10dp"
             android:textCursorDrawable="@drawable/cursorcolor"
             android:textSize="16sp" />
@@ -118,7 +161,6 @@
             android:layout_toRightOf="@+id/repeat_pass_img"
             android:background="#00000000"
             android:hint="重复密码"
-            android:inputType="textPassword"
             android:padding="10dp"
             android:textCursorDrawable="@drawable/cursorcolor"
             android:textSize="16sp" />
@@ -144,36 +186,83 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/validate_img"
+            android:id="@+id/input_phone_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/validate"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:src="@mipmap/phone" />
 
         <EditText
-            android:id="@+id/input_validate"
-            android:layout_width="180dp"
+            android:id="@+id/register_input_phone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/validate_img"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/input_phone_img"
             android:background="#00000000"
-            android:hint="验证码"
-            android:inputType="textPassword"
+            android:hint="电话号"
+            android:inputType="number"
             android:padding="10dp"
             android:textCursorDrawable="@drawable/cursorcolor"
             android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/send_validate"
-            android:layout_width="100dp"
-            android:layout_height="55dp"
+        <ImageView
+            android:id="@+id/register_clear_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="发送验证码"/>
+            android:layout_centerVertical="true"
+            android:src="@mipmap/error"
+            android:visibility="gone" />
 
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="#cfcfcf" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/user_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/sex" />
+
+        <RadioGroup
+            android:id="@+id/sex_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp">
+
+            <RadioButton
+                android:id="@+id/sex_boy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男"/>
+
+            <RadioButton
+                android:id="@+id/sex_girl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女"
+                android:layout_marginLeft="40dp"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
 
 </LinearLayout>
