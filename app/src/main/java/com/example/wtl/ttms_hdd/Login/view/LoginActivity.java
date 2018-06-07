@@ -1,22 +1,19 @@
 package com.example.wtl.ttms_hdd.Login.view;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.wtl.ttms_hdd.HDDMain.view.Activity.MainActivity;
+import com.example.wtl.ttms_hdd.ChangePassword.view.ChangePassActivity;
 import com.example.wtl.ttms_hdd.Login.presenter.ILoginPresenter;
 import com.example.wtl.ttms_hdd.Login.presenter.LoginPresenterCompl;
 import com.example.wtl.ttms_hdd.R;
-import com.example.wtl.ttms_hdd.Register.view.RegisterActivity;
+import com.example.wtl.ttms_hdd.Tool.ClearEditText;
 
 /**
  * 登陆界面实现
@@ -73,8 +70,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (compl == null) {
             compl = new LoginPresenterCompl(this);
         }
-        compl.addTextEdit(input_account, clear_account);
-        compl.addTextEdit(input_password, clear_password);
+        ClearEditText.clearEditText(input_account,clear_account);
+        ClearEditText.clearEditText(input_password,clear_password);
         compl.showValidate(get_validate);
     }
 
@@ -120,6 +117,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 /*
                 * 处理忘记密码
                 * */
+                Intent intent = new Intent(LoginActivity.this, ChangePassActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
                 break;
             case R.id.toregister:
                 /*
@@ -134,19 +134,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 /*
                 * 清空账号
                 * */
-                if (compl == null) {
-                    compl = new LoginPresenterCompl(this);
-                }
-                compl.clear(input_account);
+                ClearEditText.clear(input_account);
                 break;
             case R.id.clear_password:
                 /*
                 * 清空密码
                 * */
+                ClearEditText.clear(input_password);
+                break;
+            case R.id.get_validate:
+                /*
+                * 更换验证码
+                * */
                 if (compl == null) {
                     compl = new LoginPresenterCompl(this);
                 }
-                compl.clear(input_password);
+                compl.showValidate(get_validate);
                 break;
         }
     }

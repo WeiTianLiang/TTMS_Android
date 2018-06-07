@@ -1,6 +1,6 @@
 package com.example.wtl.ttms_hdd.Register.presenter;
 
-import com.example.wtl.ttms_hdd.Tool.ResultModel;
+import com.example.wtl.ttms_hdd.NetTool.ResultModel;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;

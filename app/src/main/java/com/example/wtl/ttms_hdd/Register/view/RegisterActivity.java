@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Register.presenter.IRegisterPresenter;
 import com.example.wtl.ttms_hdd.Register.presenter.RegisterPresenterCompl;
+import com.example.wtl.ttms_hdd.Tool.ClearEditText;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -125,11 +126,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (presenter == null) {
             presenter = new RegisterPresenterCompl(this);
         }
-        presenter.registerAddTextEdit(register_input_account, register_clear_account);
-        presenter.registerAddTextEdit(register_input_password, register_clear_password);
-        presenter.registerAddTextEdit(repeat_input_password, repeat_clear_password);
-        presenter.registerAddTextEdit(register_input_name, register_clear_name);
-        presenter.registerAddTextEdit(register_input_phone, register_clear_phone);
+        ClearEditText.clearEditText(register_input_account, register_clear_account);
+        ClearEditText.clearEditText(register_input_password, register_clear_password);
+        ClearEditText.clearEditText(repeat_input_password, repeat_clear_password);
+        ClearEditText.clearEditText(register_input_name, register_clear_name);
+        ClearEditText.clearEditText(register_input_phone, register_clear_phone);
     }
 
     @Override
@@ -155,46 +156,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 /*
                 * 清除
                 * */
-                if (presenter == null) {
-                    presenter = new RegisterPresenterCompl(this);
-                }
-                presenter.registerClear(register_input_account);
+                ClearEditText.clear(register_input_account);
                 break;
             case R.id.register_clear_password:
                 /*
                 * 清除
                 * */
-                if (presenter == null) {
-                    presenter = new RegisterPresenterCompl(this);
-                }
-                presenter.registerClear(register_input_password);
+                ClearEditText.clear(register_input_password);
                 break;
             case R.id.repeat_clear_password:
                 /*
                 * 清除
                 * */
-                if (presenter == null) {
-                    presenter = new RegisterPresenterCompl(this);
-                }
-                presenter.registerClear(repeat_input_password);
+                ClearEditText.clear(repeat_input_password);
                 break;
             case R.id.register_clear_phone:
                 /*
                 * 清除
                 * */
-                if (presenter == null) {
-                    presenter = new RegisterPresenterCompl(this);
-                }
-                presenter.registerClear(register_input_phone);
+                ClearEditText.clear(register_input_phone);
                 break;
             case R.id.register_clear_name:
                 /*
                 * 清除
                 * */
-                if (presenter == null) {
-                    presenter = new RegisterPresenterCompl(this);
-                }
-                presenter.registerClear(register_input_name);
+                ClearEditText.clear(register_input_name);
                 break;
             case R.id.main_register:
                 /*

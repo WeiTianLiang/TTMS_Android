@@ -1,6 +1,5 @@
 package com.example.wtl.ttms_hdd.Login.presenter;
 
-import android.widget.EditText;
 import android.widget.ImageView;
 
 /**
@@ -18,14 +17,6 @@ public interface ILoginPresenter {
      * 处理注册接口
      */
     void doRegister();
-    /**
-     * 登陆清空
-     */
-    void clear(EditText edit);
-    /**
-    * 清空某行的文字
-    * */
-    void addTextEdit(EditText edit, ImageView delete);
     /**
      * 展示验证码
      * */

@@ -1,6 +1,6 @@
 package com.example.wtl.ttms_hdd.Login.presenter;
 
-import com.example.wtl.ttms_hdd.Tool.ResultModel;
+import com.example.wtl.ttms_hdd.NetTool.ResultModel;
 import com.example.wtl.ttms_hdd.Login.model.ValidateModel;
 
 import okhttp3.RequestBody;

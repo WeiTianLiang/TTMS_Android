@@ -11,11 +11,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.wtl.ttms_hdd.HDDMain.view.Activity.MainActivity;
 import com.example.wtl.ttms_hdd.Login.presenter.LoginPresenterCompl;
 import com.example.wtl.ttms_hdd.R;
-import com.example.wtl.ttms_hdd.Tool.CreateRetrofit;
-import com.example.wtl.ttms_hdd.Tool.ResultModel;
+import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
+import com.example.wtl.ttms_hdd.NetTool.ResultModel;
+import com.example.wtl.ttms_hdd.Tool.PackageGson;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -42,41 +42,6 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
     }
 
     @Override
-    public void registerClear(EditText edit) {
-        edit.setText("");
-    }
-
-    @Override
-    public void registerAddTextEdit(final EditText edit, final ImageView delete) {
-        edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                /*
-                * 不为空时显示清除
-                * */
-                if (!edit.getText().toString().equals("")) {
-                    delete.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                /*
-                * 为空时不显示清除
-                * */
-                if (edit.getText().toString().equals("")) {
-                    delete.setVisibility(View.GONE);
-                }
-            }
-        });
-    }
-
-    @Override
     public void doBack() {
         ((Activity) context).finish();
         ((Activity) context).overridePendingTransition(R.anim.activity_right_out, R.anim.activity_right_in);
@@ -99,10 +64,7 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
             registerMap.put("tel", tel);
             registerMap.put("theaterId",-1);
 
-            Gson gson = new Gson();
-            String jsonDate = gson.toJson(registerMap);
-
-            RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonDate);
+            RequestBody body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(registerMap));
             GetRegister_Interface request = CreateRetrofit.requestRetrofit(LoginPresenterCompl.sessionId).create(GetRegister_Interface.class);
             Call<ResultModel> call = request.postCreateUser(body);
             call.enqueue(new Callback<ResultModel>() {
@@ -110,6 +72,8 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
                 public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
+                            Log.e("asdasdsa",response.body().getResult()+"");
+                            Log.e("asdasdsa",response.body().getMsg());
                             if (response.body().getResult() == 200 && response.body().getMsg().equals("successful")) {
                                 ((Activity) context).finish();
                                 ((Activity) context).overridePendingTransition(R.anim.activity_right_out, R.anim.activity_right_in);

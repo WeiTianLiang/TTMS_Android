@@ -1,8 +1,10 @@
 package com.example.wtl.ttms_hdd.Login.presenter;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.Editable;
@@ -15,11 +17,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.wtl.ttms_hdd.HDDMain.view.Activity.MainActivity;
-import com.example.wtl.ttms_hdd.Tool.ResultModel;
+import com.example.wtl.ttms_hdd.NetTool.ResultModel;
 import com.example.wtl.ttms_hdd.Login.model.ValidateModel;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Register.view.RegisterActivity;
-import com.example.wtl.ttms_hdd.Tool.CreateRetrofit;
+import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
+import com.example.wtl.ttms_hdd.Tool.PackageGson;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -41,6 +44,8 @@ public class LoginPresenterCompl implements ILoginPresenter {
 
     private Context context;
 
+    private ImageView imageView;
+
     public LoginPresenterCompl(Context context) {
         this.context = context;
     }
@@ -58,20 +63,14 @@ public class LoginPresenterCompl implements ILoginPresenter {
             /*
             * 将数据封装成map
             * */
-            Map<String, String> loginMap = new HashMap<>();
+            Map<String, Object> loginMap = new HashMap<>();
             loginMap.put("account", account);
             loginMap.put("password", password);
             loginMap.put("verCode", verCode);
             /*
-            * 将map封装成json数据
-            * */
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(loginMap);
-            Log.d("asdasdsa",jsonData);
-            /*
             * 创建数据body
             * */
-            RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonData);
+            RequestBody body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(loginMap));
             /*
             * 向服务器发送数据
             * */
@@ -84,19 +83,19 @@ public class LoginPresenterCompl implements ILoginPresenter {
                 @Override
                 public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
                     if (response.isSuccessful()) {
+                        Log.e("asdasdsa",response.body().getResult()+"");
+                        Log.e("asdasdsa",response.body().getMsg());
                         if (response.body() != null) {
-                            Log.e("asdasdsa",response.body().getResult()+"");
-                            Log.e("asdasdsa",response.body().getMsg());
                             if (response.body().getResult() == 200 && response.body().getMsg().equals("successful")) {
                                 Intent intent = new Intent(context, MainActivity.class);
                                 context.startActivity(intent);
                                 ((Activity) context).finish();
                                 ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
                             } else {
-                                Toast.makeText(context, "登陆失败!!!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "登陆失败!账号,密码,验证码错误!", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(context, "登陆失败!账号,密码,验证码错误!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "登陆失败!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(context, "登陆失败!!!", Toast.LENGTH_SHORT).show();
@@ -119,42 +118,8 @@ public class LoginPresenterCompl implements ILoginPresenter {
     }
 
     @Override
-    public void clear(EditText edit) {
-        edit.setText("");
-    }
-
-    @Override
-    public void addTextEdit(final EditText edit, final ImageView delete) {
-        edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                /*
-                * 不为空时显示清除
-                * */
-                if (!edit.getText().toString().equals("")) {
-                    delete.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                /*
-                * 为空时不显示清除
-                * */
-                if (edit.getText().toString().equals("")) {
-                    delete.setVisibility(View.GONE);
-                }
-            }
-        });
-    }
-
-    @Override
     public void showValidate(final ImageView image) {
+        imageView = image;
         /*
         * 发送请求
         * */

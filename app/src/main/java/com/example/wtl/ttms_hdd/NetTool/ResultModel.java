@@ -1,4 +1,4 @@
-package com.example.wtl.ttms_hdd.Tool;
+package com.example.wtl.ttms_hdd.NetTool;
 
 /**
  * 登陆结果解析

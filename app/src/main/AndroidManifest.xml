@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".HDDMain.view.Activity.MainActivity" />
         <activity android:name=".Register.view.RegisterActivity" />
-        <activity android:name=".BuyTicket.view.BuyTicketActivity"></activity>
+        <activity android:name=".BuyTicket.view.BuyTicketActivity" />
+        <activity android:name=".ChangePassword.view.ChangePassActivity"></activity>
     </application>
 
 </manifest>
