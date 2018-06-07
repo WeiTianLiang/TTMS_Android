@@ -22,6 +22,7 @@ import com.example.wtl.ttms_hdd.Login.model.ValidateModel;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Register.view.RegisterActivity;
 import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
+import com.example.wtl.ttms_hdd.Tool.FileOperate;
 import com.example.wtl.ttms_hdd.Tool.PackageGson;
 import com.google.gson.Gson;
 
@@ -53,7 +54,7 @@ public class LoginPresenterCompl implements ILoginPresenter {
     /**
      * 获取服务器发来的请求头
      */
-    public static String sessionId = null;
+    private String sessionId = null;
 
     @Override
     public void doLogin(String account, String password, String verCode) {
@@ -74,7 +75,7 @@ public class LoginPresenterCompl implements ILoginPresenter {
             /*
             * 向服务器发送数据
             * */
-            final GetLogin_Interface request = CreateRetrofit.requestRetrofit(sessionId).create(GetLogin_Interface.class);
+            final GetLogin_Interface request = CreateRetrofit.requestRetrofit(/*从sharepreference中读取的cookie值*/FileOperate.readFile(context)).create(GetLogin_Interface.class);
             Call<ResultModel> call = request.postUser(body);
             /*
             * 异步网络请求
@@ -136,6 +137,7 @@ public class LoginPresenterCompl implements ILoginPresenter {
                     * 从请求头获取用户cookie
                     * */
                     sessionId = response.headers().get("Set-Cookie");
+                    FileOperate.writeFile(sessionId,context);
                     ValidateModel validate = response.body();
                     if (validate != null) {
                         byte[] arry = Base64.decode(validate.getBase64(), Base64.DEFAULT);

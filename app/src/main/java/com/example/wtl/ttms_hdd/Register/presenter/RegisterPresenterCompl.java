@@ -15,6 +15,7 @@ import com.example.wtl.ttms_hdd.Login.presenter.LoginPresenterCompl;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
 import com.example.wtl.ttms_hdd.NetTool.ResultModel;
+import com.example.wtl.ttms_hdd.Tool.FileOperate;
 import com.example.wtl.ttms_hdd.Tool.PackageGson;
 import com.google.gson.Gson;
 
@@ -48,32 +49,32 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
     }
 
     @Override
-    public void doRegister(String name, String account, String password, String sex, String tel) {
+    public void doRegister(String name, String account, String password, String re_password, String sex, String tel) {
         /*
         * 执行注册的动作
         * */
-        if (name == null || account == null || password == null || sex == null || tel == null) {
+        if (name == null || account == null || password == null || sex == null || tel == null || re_password == null || !re_password.equals(password)) {
             Toast.makeText(context, "注册失败!数据不能为空!", Toast.LENGTH_SHORT).show();
         } else {
             Map<String, Object> registerMap = new HashMap<>();
             registerMap.put("name", name);
             registerMap.put("account", account);
             registerMap.put("password", password);
-            registerMap.put("level","售票员");
+            registerMap.put("level", "售票员");
             registerMap.put("sex", sex);
             registerMap.put("tel", tel);
-            registerMap.put("theaterId",-1);
+            registerMap.put("theaterId", -1);
 
             RequestBody body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(registerMap));
-            GetRegister_Interface request = CreateRetrofit.requestRetrofit(LoginPresenterCompl.sessionId).create(GetRegister_Interface.class);
+            GetRegister_Interface request = CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetRegister_Interface.class);
             Call<ResultModel> call = request.postCreateUser(body);
             call.enqueue(new Callback<ResultModel>() {
                 @Override
                 public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
-                            Log.e("asdasdsa",response.body().getResult()+"");
-                            Log.e("asdasdsa",response.body().getMsg());
+                            Log.e("asdasdsa", response.body().getResult() + "");
+                            Log.e("asdasdsa", response.body().getMsg());
                             if (response.body().getResult() == 200 && response.body().getMsg().equals("successful")) {
                                 ((Activity) context).finish();
                                 ((Activity) context).overridePendingTransition(R.anim.activity_right_out, R.anim.activity_right_in);

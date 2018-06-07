@@ -13,5 +13,5 @@ public interface IRegisterPresenter {
     /**
     * 注册执行接口
     * */
-    void doRegister(String name,String account,String password,String sex,String tel);
+    void doRegister(String name,String account,String password,String re_password,String sex,String tel);
 }

@@ -8,8 +8,8 @@ package com.example.wtl.ttms_hdd.ChangePassword.presenter;
 public interface IChangePassPresenter {
 
     /**
-    * 修改接口，执行修改逻辑
-    * */
-    void doChange(String account,String password);
+     * 修改接口，执行修改逻辑
+     */
+    void doChange(String account, String password, String re_password);
 
 }
