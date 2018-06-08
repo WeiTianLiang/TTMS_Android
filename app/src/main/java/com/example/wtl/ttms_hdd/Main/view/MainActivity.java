@@ -9,7 +9,9 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.wtl.ttms_hdd.Film.view.mainFragment.FilmShowFragment;
 import com.example.wtl.ttms_hdd.R;
+import com.example.wtl.ttms_hdd.TheHome.view.HomeFragment;
 import com.example.wtl.ttms_hdd.Tool.HideScreenTop;
+import com.gyf.barlibrary.ImmersionBar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
      * 电影碎片
      */
     private FilmShowFragment showFragment;
+    /**
+     * 首页碎片
+     */
+    private HomeFragment homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +44,25 @@ public class MainActivity extends AppCompatActivity {
                 .addItem(new BottomNavigationItem(R.mipmap.movie, "影片"))
                 .addItem(new BottomNavigationItem(R.mipmap.hallitem, "影厅"))
                 .addItem(new BottomNavigationItem(R.mipmap.my, "我的"))
+                .setFirstSelectedPosition(0)
                 .initialise();
-
         change(bottom_navigation);
+        firstSelect();
+    }
 
+    /**
+     * 第一次加载
+     */
+    private void firstSelect() {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        hideFragment(transaction);
+        if (homeFragment == null) {
+            homeFragment = new HomeFragment();
+        }
+        transaction.replace(R.id.add_fragment, homeFragment);
+        transaction.show(homeFragment);
+        transaction.commit();
     }
 
     private void change(BottomNavigationBar bottom_navigation) {
@@ -53,12 +74,17 @@ public class MainActivity extends AppCompatActivity {
                 hideFragment(transaction);
                 switch (position) {
                     case 0:
+                        if (homeFragment == null) {
+                            homeFragment = new HomeFragment();
+                            transaction.add(R.id.add_fragment, homeFragment);
+                        }
+                        transaction.show(homeFragment);
                         break;
                     case 1:
                         if (showFragment == null) {
                             showFragment = new FilmShowFragment();
+                            transaction.add(R.id.add_fragment, showFragment);
                         }
-                        transaction.replace(R.id.add_fragment, showFragment);
                         transaction.show(showFragment);
                         break;
                     case 2:
@@ -84,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
     private void hideFragment(FragmentTransaction transaction) {
         if (showFragment != null) {
             transaction.hide(showFragment);
+        }
+        if (homeFragment != null) {
+            transaction.hide(homeFragment);
         }
     }
 

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <View
         android:id="@+id/qqq"
@@ -23,7 +22,8 @@
         app:tabTextColor="#d4d4d4"
         app:tabTextAppearance="@style/TabLayoutSize"
         android:background="#ea5353"
-        android:layout_below="@id/qqq"/>
+        android:layout_below="@id/qqq"
+        android:fitsSystemWindows="true"/>
 
     <View
         android:id="@+id/huafen"

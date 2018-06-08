@@ -15,6 +15,7 @@ import com.example.wtl.ttms_hdd.BuyTicket.presenter.BuyTicketPresentCompl;
 import com.example.wtl.ttms_hdd.BuyTicket.presenter.IBuyTicketPresenter;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Tool.HideScreenTop;
+import com.gyf.barlibrary.ImmersionBar;
 
 public class BuyTicketActivity extends AppCompatActivity implements View.OnClickListener{
 
