@@ -14,5 +14,4 @@ public interface IBuyTicketPresenter {
     * 展示详情
     * */
     void showDetail(ImageView image,TextView text);
-
 }

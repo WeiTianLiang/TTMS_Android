@@ -3,37 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.wtl.ttms_hdd.HDDMain.view.Activity.MainActivity">
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/HDDtoptitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabIndicatorHeight="2dp"
-        app:tabGravity="center"
-        app:tabIndicatorColor="#f9c355"
-        app:tabSelectedTextColor="#f9c355"
-        app:tabTextColor="#b9b9b9"
-        app:tabTextAppearance="@style/TabLayoutSize"/>
-
-    <View
-        android:id="@+id/huafen"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#a7a7a7"
-        android:layout_below="@+id/HDDtoptitle"/>
+    tools:context="com.example.wtl.ttms_hdd.Main.view.MainActivity">
 
     <FrameLayout
-        android:id="@+id/framelayout_card"
+        android:id="@+id/add_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/huafen"/>
+        android:layout_height="wrap_content"/>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/HDDviewpager"
+    <com.ashokvarma.bottomnavigation.BottomNavigationBar
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/framelayout_card"/>
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

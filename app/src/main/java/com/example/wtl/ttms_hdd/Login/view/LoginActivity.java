@@ -14,6 +14,7 @@ import com.example.wtl.ttms_hdd.Login.presenter.ILoginPresenter;
 import com.example.wtl.ttms_hdd.Login.presenter.LoginPresenterCompl;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Tool.ClearEditText;
+import com.example.wtl.ttms_hdd.Tool.HideScreenTop;
 
 /**
  * 登陆界面实现
@@ -66,6 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        HideScreenTop.HideScreenTop(getWindow());
         Montior();
         if (compl == null) {
             compl = new LoginPresenterCompl(this);

@@ -18,6 +18,7 @@ import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Register.presenter.IRegisterPresenter;
 import com.example.wtl.ttms_hdd.Register.presenter.RegisterPresenterCompl;
 import com.example.wtl.ttms_hdd.Tool.ClearEditText;
+import com.example.wtl.ttms_hdd.Tool.HideScreenTop;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -87,6 +88,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        HideScreenTop.HideScreenTop(getWindow());
         Montior();
     }
 
@@ -190,7 +192,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     presenter = new RegisterPresenterCompl(this);
                 }
                 presenter.doRegister(register_input_name.getText().toString(),register_input_account.getText().toString()
-                        ,register_input_password.getText().toString(),sexString,register_input_phone.getText().toString());
+                        ,register_input_password.getText().toString(),repeat_input_password.getText().toString()
+                        ,sexString,register_input_phone.getText().toString());
                 break;
         }
     }

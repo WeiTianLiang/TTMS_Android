@@ -12,6 +12,7 @@ import com.example.wtl.ttms_hdd.ChangePassword.presenter.ChangePassPresenterComp
 import com.example.wtl.ttms_hdd.ChangePassword.presenter.IChangePassPresenter;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Tool.ClearEditText;
+import com.example.wtl.ttms_hdd.Tool.HideScreenTop;
 
 public class ChangePassActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -57,6 +58,7 @@ public class ChangePassActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pass);
+        HideScreenTop.HideScreenTop(getWindow());
         passPresenter = new ChangePassPresenterCompl(this);
         Montior();
     }
@@ -92,7 +94,7 @@ public class ChangePassActivity extends AppCompatActivity implements View.OnClic
                 if(passPresenter==null) {
                     passPresenter = new ChangePassPresenterCompl(this);
                 }
-                passPresenter.doChange(change_input_account.getText().toString(),change_input_password.getText().toString());
+                passPresenter.doChange(change_input_account.getText().toString(),change_input_password.getText().toString(),change_re_password.getText().toString());
                 break;
             case R.id.register_back:
                 /*

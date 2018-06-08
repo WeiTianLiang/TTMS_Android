@@ -1,9 +1,10 @@
-package com.example.wtl.ttms_hdd.HDDMain.presenter;
+package com.example.wtl.ttms_hdd.Film.presenter.adapter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,43 +12,41 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.wtl.ttms_hdd.BuyTicket.view.BuyTicketActivity;
-import com.example.wtl.ttms_hdd.HDDMain.model.FileModel;
-import com.example.wtl.ttms_hdd.HDDMain.model.IFile;
-import com.example.wtl.ttms_hdd.HDDMain.view.Activity.MainActivity;
+import com.example.wtl.ttms_hdd.BuyTicket.view.activity.BuyTicketActivity;
+import com.example.wtl.ttms_hdd.Film.model.FilmModel;
 import com.example.wtl.ttms_hdd.R;
 
 import java.util.List;
 
 /**
- * 适配器
- * Created by WTL on 2018/6/5.
+ * 影片展示适配器
+ * Created by WTL on 2018/6/8.
  */
 
-public class FilmSellAdapter extends RecyclerView.Adapter<FilmSellAdapter.ViewHolder> {
+public class FilmShowAdapter extends RecyclerView.Adapter<FilmShowAdapter.ViewHolder> {
 
-    private List<FileModel> fileModelList;
+    private List<FilmModel.data> filmModelList;
     private Context context;
 
-    public FilmSellAdapter(List<FileModel> fileModelList,Context context) {
-        this.fileModelList = fileModelList;
+    public FilmShowAdapter(List<FilmModel.data> fileModelList, Context context) {
+        this.filmModelList = fileModelList;
         this.context = context;
     }
 
     @Override
-    public FilmSellAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.filmrecyclercard,null);
+    public FilmShowAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.filmrecyclercard, null);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(FilmSellAdapter.ViewHolder holder, int position) {
-        IFile file = fileModelList.get(position);
-        holder.film_head.setImageResource(file.getFilm_head());
-        holder.film_name.setText(file.getFilm_name());
-        holder.film_acters.setText(file.getFilm_acters());
-        holder.average_score.setText(file.getAverage_score());
+    public void onBindViewHolder(FilmShowAdapter.ViewHolder holder, int position) {
+        FilmModel.data file = filmModelList.get(position);
+        holder.film_head.setImageResource(R.drawable.ceshi);
+        holder.film_name.setText(file.getProgrammeName());
+        holder.film_time.setText(file.getProgrammeDruation());
+        holder.average_score.setText("9.0");
         holder.jump_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,14 +73,14 @@ public class FilmSellAdapter extends RecyclerView.Adapter<FilmSellAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return fileModelList.size();
+        return filmModelList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView film_head;
         TextView film_name;
-        TextView film_acters;
+        TextView film_time;
         TextView average_score;
         TextView jump_buy;
         LinearLayout jump_buy2;
@@ -90,10 +89,11 @@ public class FilmSellAdapter extends RecyclerView.Adapter<FilmSellAdapter.ViewHo
             super(itemView);
             film_head = itemView.findViewById(R.id.film_head);
             film_name = itemView.findViewById(R.id.film_name);
-            film_acters = itemView.findViewById(R.id.film_acters);
+            film_time = itemView.findViewById(R.id.film_time);
             average_score = itemView.findViewById(R.id.average_score);
             jump_buy = itemView.findViewById(R.id.jump_buy);
             jump_buy2 = itemView.findViewById(R.id.jump_buy2);
         }
     }
+
 }

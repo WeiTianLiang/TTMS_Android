@@ -1,4 +1,4 @@
-package com.example.wtl.ttms_hdd.HDDMain.presenter;
+package com.example.wtl.ttms_hdd.Film.presenter.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

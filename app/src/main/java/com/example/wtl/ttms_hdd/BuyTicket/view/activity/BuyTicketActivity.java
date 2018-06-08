@@ -1,16 +1,20 @@
-package com.example.wtl.ttms_hdd.BuyTicket.view;
+package com.example.wtl.ttms_hdd.BuyTicket.view.activity;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.wtl.ttms_hdd.BuyTicket.presenter.BuyTicketPresentCompl;
 import com.example.wtl.ttms_hdd.BuyTicket.presenter.IBuyTicketPresenter;
 import com.example.wtl.ttms_hdd.R;
+import com.example.wtl.ttms_hdd.Tool.HideScreenTop;
 
 public class BuyTicketActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -27,38 +31,27 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
      * */
     private TextView buy_name;
     /**
-     * 得分
-     * */
-    private TextView buy_score;
-    /**
      * 类型
      * */
     private TextView buy_type;
     /**
-     * 导演
+     * 时长
      * */
-    private TextView buy_director;
-    /**
-     * 下拉详情
-     * */
-    private ImageView go_details;
-    /**
-     * 展示详情
-     * */
-    private TextView this_details;
-    /**
-     * 评分
-     * */
-    private TextView ticket_score;
+    private TextView buy_durtion;
     /**
     * 初始化接口
     * */
     private IBuyTicketPresenter presenter = null;
+    /**
+    * 购票跳转
+    * */
+    private TextView tobuy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_ticket);
+        HideScreenTop.HideScreenTop(getWindow());
         if(presenter == null) {
             presenter = new BuyTicketPresentCompl(this);
         }
@@ -71,17 +64,13 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
                 .load("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=178339431,3551923999&fm=27&gp=0.jpg")
                 .into(ticket_img);
         buy_name = findViewById(R.id.buy_name);
-        buy_score = findViewById(R.id.buy_score);
         buy_type = findViewById(R.id.buy_type);
-        buy_director = findViewById(R.id.buy_director);
-        go_details = findViewById(R.id.go_details);
-        this_details = findViewById(R.id.this_details);
-        ticket_score = findViewById(R.id.ticket_score);
+        buy_durtion = findViewById(R.id.buy_durtion);
         buyback = findViewById(R.id.buyback);
+        tobuy = findViewById(R.id.tobuy);
 
-        go_details.setOnClickListener(this);
-        ticket_score.setOnClickListener(this);
         buyback.setOnClickListener(this);
+        tobuy.setOnClickListener(this);
     }
 
     @Override
@@ -91,16 +80,8 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
                 finish();
                 overridePendingTransition(R.anim.activity_right_out, R.anim.activity_right_in);
                 break;
-            case R.id.go_details:
-                if(presenter == null) {
-                    presenter = new BuyTicketPresentCompl(this);
-                }
-                presenter.showDetail(go_details,this_details);
-                break;
-            case R.id.ticket_score:
-                /*
-                * 评分功能
-                * */
+            case R.id.tobuy:
+                Toast.makeText(this,"你已经买了",Toast.LENGTH_SHORT).show();
                 break;
         }
     }

@@ -1,22 +1,16 @@
 package com.example.wtl.ttms_hdd.Login.presenter;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.wtl.ttms_hdd.HDDMain.view.Activity.MainActivity;
+import com.example.wtl.ttms_hdd.Main.view.MainActivity;
 import com.example.wtl.ttms_hdd.NetTool.ResultModel;
 import com.example.wtl.ttms_hdd.Login.model.ValidateModel;
 import com.example.wtl.ttms_hdd.R;
@@ -24,7 +18,6 @@ import com.example.wtl.ttms_hdd.Register.view.RegisterActivity;
 import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
 import com.example.wtl.ttms_hdd.Tool.FileOperate;
 import com.example.wtl.ttms_hdd.Tool.PackageGson;
-import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,7 +80,7 @@ public class LoginPresenterCompl implements ILoginPresenter {
                         Log.e("asdasdsa",response.body().getResult()+"");
                         Log.e("asdasdsa",response.body().getMsg());
                         if (response.body() != null) {
-                            if (response.body().getResult() == 200 && response.body().getMsg().equals("successful")) {
+                            if (response.body().getResult() == 200) {
                                 Intent intent = new Intent(context, MainActivity.class);
                                 context.startActivity(intent);
                                 ((Activity) context).finish();
