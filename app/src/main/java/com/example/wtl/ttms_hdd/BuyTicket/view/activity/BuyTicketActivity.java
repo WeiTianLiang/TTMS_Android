@@ -1,12 +1,11 @@
 package com.example.wtl.ttms_hdd.BuyTicket.view.activity;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +14,6 @@ import com.example.wtl.ttms_hdd.BuyTicket.presenter.BuyTicketPresentCompl;
 import com.example.wtl.ttms_hdd.BuyTicket.presenter.IBuyTicketPresenter;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Tool.HideScreenTop;
-import com.gyf.barlibrary.ImmersionBar;
 
 public class BuyTicketActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -47,16 +45,30 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
     * 购票跳转
     * */
     private TextView tobuy;
+    /**
+    * 详情
+    * */
+    private TextView text_details;
+    /**
+    * 背景图
+    * */
+    private ImageView showback;
+    /**
+    * 蒙层
+    * */
+    private RelativeLayout top;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_ticket);
         HideScreenTop.HideScreenTop(getWindow());
+        Montior();
         if(presenter == null) {
             presenter = new BuyTicketPresentCompl(this);
         }
-        Montior();
+        String name = getIntent().getStringExtra("name");
+        presenter.showDetail(name,ticket_img,buy_name,buy_type,buy_durtion,text_details,showback);
     }
 
     private void Montior() {
@@ -69,6 +81,11 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
         buy_durtion = findViewById(R.id.buy_durtion);
         buyback = findViewById(R.id.buyback);
         tobuy = findViewById(R.id.tobuy);
+        text_details = findViewById(R.id.text_details);
+        showback = findViewById(R.id.showback);
+        top = findViewById(R.id.top);
+
+        top.getBackground().setAlpha(240);
 
         buyback.setOnClickListener(this);
         tobuy.setOnClickListener(this);

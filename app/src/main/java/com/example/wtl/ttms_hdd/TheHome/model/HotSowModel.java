@@ -1,5 +1,7 @@
 package com.example.wtl.ttms_hdd.TheHome.model;
 
+import java.util.List;
+
 /**
  * 热映类
  * Created by WTL on 2018/6/9.
@@ -7,19 +9,22 @@ package com.example.wtl.ttms_hdd.TheHome.model;
 
 public class HotSowModel {
 
-    private int homeshow_image;
-    private String homeshow_name;
+    private int result;
+    private List<data> data;
 
-    public HotSowModel(int homeshow_image,String homeshow_name) {
-        this.homeshow_image = homeshow_image;
-        this.homeshow_name = homeshow_name;
+    public class data {
+        private String programmeName;
+
+        public String getProgrammeName() {
+            return programmeName;
+        }
     }
 
-    public int getHomeshow_image() {
-        return homeshow_image;
+    public int getResult() {
+        return result;
     }
 
-    public String getHomeshow_name() {
-        return homeshow_name;
+    public List<HotSowModel.data> getData() {
+        return data;
     }
 }

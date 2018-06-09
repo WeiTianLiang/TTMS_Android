@@ -1,5 +1,7 @@
 package com.example.wtl.ttms_hdd.TheHome.model;
 
+import java.util.List;
+
 /**
  * 即将上映类
  * Created by WTL on 2018/6/9.
@@ -7,25 +9,22 @@ package com.example.wtl.ttms_hdd.TheHome.model;
 
 public class WillShowModel {
 
-    private int homeshow_image;
-    private String homeshow_name;
-    private String homeshow_time;
+    private int result;
+    private List<data> data;
 
-    public WillShowModel(int homeshow_image,String homeshow_name,String homeshow_time) {
-        this.homeshow_image = homeshow_image;
-        this.homeshow_name = homeshow_name;
-        this.homeshow_time = homeshow_time;
+    public class data {
+        private String programmeName;
+
+        public String getProgrammeName() {
+            return programmeName;
+        }
     }
 
-    public int getHomeshow_image() {
-        return homeshow_image;
+    public int getResult() {
+        return result;
     }
 
-    public String getHomeshow_name() {
-        return homeshow_name;
-    }
-
-    public String getHomeshow_time() {
-        return homeshow_time;
+    public List<WillShowModel.data> getData() {
+        return data;
     }
 }

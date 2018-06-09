@@ -1,8 +1,11 @@
 package com.example.wtl.ttms_hdd.TheHome.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
+import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.TheHome.model.HotSowModel;
 import com.example.wtl.ttms_hdd.TheHome.model.WillShowModel;
@@ -14,6 +17,10 @@ import com.youth.banner.Banner;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * 主页逻辑层实现
  * Created by WTL on 2018/6/8.
@@ -24,8 +31,8 @@ public class TheHomePresenterCompl implements ITheHomePresenter {
     private List<String> urlImage = new ArrayList<>();
     private Context context;
 
-    private List<HotSowModel> hotSowModels = new ArrayList<>();
-    private List<WillShowModel> willShowModels = new ArrayList<>();
+    private List<HotSowModel.data> hotSowModels = new ArrayList<>();
+    private List<WillShowModel.data> willShowModels = new ArrayList<>();
 
     public TheHomePresenterCompl(Context context) {
         this.context = context;
@@ -46,33 +53,78 @@ public class TheHomePresenterCompl implements ITheHomePresenter {
     }
 
     @Override
-    public void setHotAdapter(RecyclerView recyclerView) {
-        HotSowModel model = new HotSowModel(R.drawable.ceshi,"牛逼串串");
-        hotSowModels.add(model);
-        hotSowModels.add(model);
-        hotSowModels.add(model);
-        hotSowModels.add(model);
-        hotSowModels.add(model);
-        hotSowModels.add(model);
-        hotSowModels.add(model);
-        hotSowModels.add(model);
-        hotSowModels.add(model);
-        HotShowAdapter adapter = new HotShowAdapter(context,hotSowModels);
-        recyclerView.setAdapter(adapter);
+    public void setHotAdapter(final RecyclerView recyclerView) {
+        GetHomeFilm_Inference request = CreateRetrofit.requestRetrofit(null).create(GetHomeFilm_Inference.class);
+        Call<HotSowModel> call = request.getHotShow();
+        call.enqueue(new Callback<HotSowModel>() {
+            @Override
+            public void onResponse(Call<HotSowModel> call, final Response<HotSowModel> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        if (response.body().getResult() == 200) {
+                            ((Activity) context).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    for(HotSowModel.data data:response.body().getData()) {
+                                        hotSowModels.add(data);
+                                    }
+                                    HotShowAdapter adapter = new HotShowAdapter(context,hotSowModels);
+                                    recyclerView.setAdapter(adapter);
+                                }
+                            });
+                        } else {
+                            Log.e("onFailure", "请求格式错误或网络问题");
+                        }
+                    } else {
+                        Log.e("onFailure", "数据不存在");
+                    }
+                } else {
+                    Log.e("onFailure", "失败");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HotSowModel> call, Throwable t) {
+                Log.e("onFailure", t.getMessage() + "失败");
+            }
+        });
     }
 
     @Override
-    public void setWillAdapter(RecyclerView recyclerView) {
-        WillShowModel model = new WillShowModel(R.drawable.ceshi,"牛逼串串","6月68日");
-        willShowModels.add(model);
-        willShowModels.add(model);
-        willShowModels.add(model);
-        willShowModels.add(model);
-        willShowModels.add(model);
-        willShowModels.add(model);
-        willShowModels.add(model);
-        willShowModels.add(model);
-        WillShowAdapter adapter = new WillShowAdapter(context,willShowModels);
-        recyclerView.setAdapter(adapter);
+    public void setWillAdapter(final RecyclerView recyclerView) {
+        GetHomeFilm_Inference request = CreateRetrofit.requestRetrofit(null).create(GetHomeFilm_Inference.class);
+        Call<WillShowModel> call = request.getWillShow();
+        call.enqueue(new Callback<WillShowModel>() {
+            @Override
+            public void onResponse(Call<WillShowModel> call, final Response<WillShowModel> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        if (response.body().getResult() == 200) {
+                            ((Activity) context).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    for(WillShowModel.data data:response.body().getData()) {
+                                        willShowModels.add(data);
+                                    }
+                                    WillShowAdapter adapter = new WillShowAdapter(context,willShowModels);
+                                    recyclerView.setAdapter(adapter);
+                                }
+                            });
+                        } else {
+                            Log.e("onFailure", "请求格式错误或网络问题");
+                        }
+                    } else {
+                        Log.e("onFailure", "数据不存在");
+                    }
+                } else {
+                    Log.e("onFailure", "失败");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WillShowModel> call, Throwable t) {
+                Log.e("onFailure", t.getMessage() + "失败");
+            }
+        });
     }
 }

@@ -13,5 +13,8 @@ public interface IBuyTicketPresenter {
     /**
     * 展示详情
     * */
-    void showDetail(ImageView image,TextView text);
+    void showDetail(String name,ImageView ticket_img,
+                    TextView buy_name,TextView buy_type,
+                    TextView buy_durtion,TextView text_details,
+                    ImageView showback);
 }

@@ -22,6 +22,7 @@
         <activity android:name=".Register.view.RegisterActivity" />
         <activity android:name=".BuyTicket.view.activity.BuyTicketActivity" />
         <activity android:name=".ChangePassword.view.ChangePassActivity" />
+        <activity android:name=".Mine.view.MineActivity"></activity>
     </application>
 
 </manifest>

@@ -3,12 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.example.wtl.ttms_hdd.BuyTicket.view.activity.BuyTicketActivity">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/showback"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="245dp"
+        android:scaleType="fitXY"/>
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="245dp"
         android:background="#262c3b"
         android:padding="5dp"
         android:fitsSystemWindows="true">
@@ -20,7 +26,7 @@
             android:layout_gravity="center"
             android:padding="8dp"
             android:src="@mipmap/buyback"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -94,16 +100,28 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tobuy"
+        android:id="@+id/text_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="买买买"
-        android:gravity="center"
-        android:paddingBottom="16dp"
-        android:paddingTop="13dp"
-        android:textSize="18sp"
-        android:textColor="#fff"
-        android:background="#ea5353"/>
+        android:background="#ffff"
+        android:layout_below="@+id/top"
+        android:padding="5dp"
+        android:textColor="#000"
+        android:textSize="15sp"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/data_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:layout_below="@id/text_details"
+        android:layout_marginTop="6dp"/>
+
+    <FrameLayout
+        android:id="@+id/show_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:layout_below="@+id/data_show"/>
 
 </RelativeLayout>

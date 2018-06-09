@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.wtl.ttms_hdd.BuyTicket.view.activity.BuyTicketActivity;
 import com.example.wtl.ttms_hdd.Film.model.FilmModel;
 import com.example.wtl.ttms_hdd.R;
+import com.example.wtl.ttms_hdd.Tool.JumpActivity;
 
 import java.util.List;
 
@@ -41,8 +42,8 @@ public class FilmShowAdapter extends RecyclerView.Adapter<FilmShowAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(FilmShowAdapter.ViewHolder holder, int position) {
-        FilmModel.data file = filmModelList.get(position);
+    public void onBindViewHolder(final FilmShowAdapter.ViewHolder holder, int position) {
+        final FilmModel.data file = filmModelList.get(position);
         holder.film_head.setImageResource(R.drawable.ceshi);
         holder.film_name.setText(file.getProgrammeName());
         holder.film_time.setText(file.getProgrammeDruation());
@@ -53,9 +54,7 @@ public class FilmShowAdapter extends RecyclerView.Adapter<FilmShowAdapter.ViewHo
                 /*
                 * 跳转详情销售
                 * */
-                Intent intent = new Intent(context, BuyTicketActivity.class);
-                context.startActivity(intent);
-                ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
+                JumpActivity.JumpActivity(context,BuyTicketActivity.class,file.getProgrammeName());
             }
         });
         holder.jump_buy2.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +63,7 @@ public class FilmShowAdapter extends RecyclerView.Adapter<FilmShowAdapter.ViewHo
                 /*
                 * 跳转详情销售
                 * */
-                Intent intent = new Intent(context, BuyTicketActivity.class);
-                context.startActivity(intent);
-                ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
+                JumpActivity.JumpActivity(context,BuyTicketActivity.class,file.getProgrammeName());
             }
         });
     }

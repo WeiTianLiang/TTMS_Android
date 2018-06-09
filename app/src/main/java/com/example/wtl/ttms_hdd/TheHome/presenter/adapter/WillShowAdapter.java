@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.wtl.ttms_hdd.BuyTicket.view.activity.BuyTicketActivity;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.TheHome.model.WillShowModel;
+import com.example.wtl.ttms_hdd.Tool.JumpActivity;
 
 import java.util.List;
 
@@ -24,10 +25,10 @@ import java.util.List;
 
 public class WillShowAdapter extends RecyclerView.Adapter<WillShowAdapter.ViewHolder> {
 
-    private List<WillShowModel> willShowModels;
+    private List<WillShowModel.data> willShowModels;
     private Context context;
 
-    public WillShowAdapter(Context context,List<WillShowModel> willShowModels) {
+    public WillShowAdapter(Context context,List<WillShowModel.data> willShowModels) {
         this.context = context;
         this.willShowModels = willShowModels;
     }
@@ -41,16 +42,14 @@ public class WillShowAdapter extends RecyclerView.Adapter<WillShowAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(WillShowAdapter.ViewHolder holder, int position) {
-        WillShowModel willShowModel = willShowModels.get(position);
-        holder.homeshow_image.setImageResource(willShowModel.getHomeshow_image());
-        holder.homeshow_name.setText(willShowModel.getHomeshow_name());
-        holder.homeshow_time.setText(willShowModel.getHomeshow_time());
+        final WillShowModel.data willShowModel = willShowModels.get(position);
+        holder.homeshow_image.setImageResource(R.drawable.ceshi);
+        holder.homeshow_name.setText(willShowModel.getProgrammeName());
+        holder.homeshow_time.setText("6月15日");
         holder.will_show_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, BuyTicketActivity.class);
-                context.startActivity(intent);
-                ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
+                JumpActivity.JumpActivity(context,BuyTicketActivity.class,willShowModel.getProgrammeName());
             }
         });
     }

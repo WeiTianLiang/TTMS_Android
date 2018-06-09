@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.wtl.ttms_hdd.BuyTicket.view.activity.BuyTicketActivity;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.TheHome.model.HotSowModel;
+import com.example.wtl.ttms_hdd.Tool.JumpActivity;
 
 import java.util.List;
 
@@ -24,10 +25,10 @@ import java.util.List;
 
 public class HotShowAdapter extends RecyclerView.Adapter<HotShowAdapter.ViewHolder> {
 
-    private List<HotSowModel> hotSowModels;
+    private List<HotSowModel.data> hotSowModels;
     private Context context;
 
-    public HotShowAdapter(Context context,List<HotSowModel> hotSowModels) {
+    public HotShowAdapter(Context context,List<HotSowModel.data> hotSowModels) {
         this.context = context;
         this.hotSowModels = hotSowModels;
     }
@@ -41,15 +42,13 @@ public class HotShowAdapter extends RecyclerView.Adapter<HotShowAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(HotShowAdapter.ViewHolder holder, int position) {
-        HotSowModel hotSowModel = hotSowModels.get(position);
-        holder.willshow_image.setImageResource(hotSowModel.getHomeshow_image());
-        holder.willshow_name.setText(hotSowModel.getHomeshow_name());
+        final HotSowModel.data hotSowModel = hotSowModels.get(position);
+        holder.willshow_image.setImageResource(R.drawable.ceshi);
+        holder.willshow_name.setText(hotSowModel.getProgrammeName());
         holder.now_show_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, BuyTicketActivity.class);
-                context.startActivity(intent);
-                ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
+                JumpActivity.JumpActivity(context,BuyTicketActivity.class,hotSowModel.getProgrammeName());
             }
         });
     }
