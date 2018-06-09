@@ -1,9 +1,14 @@
 package com.example.wtl.ttms_hdd.Main.view;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -24,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
      * 首页碎片
      */
     private HomeFragment homeFragment;
+    /**
+     * 接受广播
+     */
+    private IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 .initialise();
         change(bottom_navigation);
         firstSelect();
+        filter = new IntentFilter("com.example.wtl.ttms_hdd.home_number");
+        registerReceiver(broadcastReceiver,filter);
     }
 
     /**
@@ -116,4 +127,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String state = intent.getStringExtra("state");
+            if (state != null) {
+                if (state.equals("now")) {
+                    bottom_navigation.selectTab(1);
+                } else if (state.equals("will")) {
+                    bottom_navigation.selectTab(1);
+                } else {
+                    Log.e("错误：","错误的接收值");
+                }
+            } else {
+                Log.e("错误：","失败。。。。。。。。。。。");
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(broadcastReceiver);
+        super.onDestroy();
+    }
 }
