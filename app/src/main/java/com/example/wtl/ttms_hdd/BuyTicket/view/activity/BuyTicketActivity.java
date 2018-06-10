@@ -1,7 +1,10 @@
 package com.example.wtl.ttms_hdd.BuyTicket.view.activity;
 
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -42,10 +45,6 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
     * */
     private IBuyTicketPresenter presenter = null;
     /**
-    * 购票跳转
-    * */
-    private TextView tobuy;
-    /**
     * 详情
     * */
     private TextView text_details;
@@ -57,6 +56,14 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
     * 蒙层
     * */
     private RelativeLayout top;
+    /**
+    * 展示时间
+    * */
+    private RecyclerView data_show;
+    /**
+    * 展示计划
+    * */
+    private RecyclerView show_plan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,15 +87,28 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
         buy_type = findViewById(R.id.buy_type);
         buy_durtion = findViewById(R.id.buy_durtion);
         buyback = findViewById(R.id.buyback);
-        tobuy = findViewById(R.id.tobuy);
         text_details = findViewById(R.id.text_details);
         showback = findViewById(R.id.showback);
         top = findViewById(R.id.top);
+        data_show = findViewById(R.id.data_show);
+        show_plan = findViewById(R.id.show_plan);
 
         top.getBackground().setAlpha(240);
 
         buyback.setOnClickListener(this);
-        tobuy.setOnClickListener(this);
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        data_show.setLayoutManager(manager);
+
+        LinearLayoutManager manager1 = new LinearLayoutManager(this);
+        show_plan.setLayoutManager(manager1);
+
+        if(presenter == null) {
+            presenter = new BuyTicketPresentCompl(this);
+        }
+        presenter.showDataText(data_show);
+        presenter.showPlanText(show_plan);
     }
 
     @Override
@@ -97,9 +117,6 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
             case R.id.buyback:
                 finish();
                 overridePendingTransition(R.anim.activity_right_out, R.anim.activity_right_in);
-                break;
-            case R.id.tobuy:
-                Toast.makeText(this,"你已经买了",Toast.LENGTH_SHORT).show();
                 break;
         }
     }

@@ -1,10 +1,7 @@
 package com.example.wtl.ttms_hdd.Film.presenter.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.wtl.ttms_hdd.BuyTicket.view.activity.BuyTicketActivity;
 import com.example.wtl.ttms_hdd.Film.model.FilmModel;
 import com.example.wtl.ttms_hdd.R;
@@ -44,7 +42,8 @@ public class FilmShowAdapter extends RecyclerView.Adapter<FilmShowAdapter.ViewHo
     @Override
     public void onBindViewHolder(final FilmShowAdapter.ViewHolder holder, int position) {
         final FilmModel.data file = filmModelList.get(position);
-        holder.film_head.setImageResource(R.drawable.ceshi);
+        String image = "http://123.206.82.241:8090/"+file.getProgrammeImagePath();
+        Glide.with(context).load(image).into(holder.film_head);
         holder.film_name.setText(file.getProgrammeName());
         holder.film_time.setText(file.getProgrammeDruation());
         holder.average_score.setText("9.0");

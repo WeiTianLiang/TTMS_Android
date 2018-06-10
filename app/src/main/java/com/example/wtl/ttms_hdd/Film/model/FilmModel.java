@@ -16,12 +16,7 @@ public class FilmModel {
         int programmeId;//剧目ID
         String programmeName;//剧目名称
         String programmeDruation;//时长
-
-        public data(int programmeId,String programmeName,String programmeDruation) {
-            this.programmeId = programmeId;
-            this.programmeDruation = programmeDruation;
-            this.programmeName = programmeName;
-        }
+        String programmeImagePath;//图片
 
         public int getProgrammeId() {
             return programmeId;
@@ -35,6 +30,9 @@ public class FilmModel {
             return programmeName;
         }
 
+        public String getProgrammeImagePath() {
+            return programmeImagePath;
+        }
     }
 
     public List<FilmModel.data> getData() {

@@ -12,6 +12,6 @@ import retrofit2.http.GET;
 
 public interface GetFilm_Inference {
 
-    @GET("/Programme")
+    @GET("/Programme/GetWithImagePath")
     Call<FilmModel> getFilmBase();
 }
