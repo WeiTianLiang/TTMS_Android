@@ -53,7 +53,8 @@ public class FilmShowAdapter extends RecyclerView.Adapter<FilmShowAdapter.ViewHo
                 /*
                 * 跳转详情销售
                 * */
-                JumpActivity.JumpActivity(context,BuyTicketActivity.class,file.getProgrammeName());
+                JumpActivity.JumpActivity(context,BuyTicketActivity.class,file.getProgrammeName(),
+                        file.getProgrammeId(),file.getProgrammeDruation());
             }
         });
         holder.jump_buy2.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +63,8 @@ public class FilmShowAdapter extends RecyclerView.Adapter<FilmShowAdapter.ViewHo
                 /*
                 * 跳转详情销售
                 * */
-                JumpActivity.JumpActivity(context,BuyTicketActivity.class,file.getProgrammeName());
+                JumpActivity.JumpActivity(context,BuyTicketActivity.class,file.getProgrammeName(),
+                        file.getProgrammeId(),file.getProgrammeDruation());
             }
         });
     }

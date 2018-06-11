@@ -20,11 +20,7 @@ public interface IBuyTicketPresenter {
                     TextView buy_durtion,TextView text_details,
                     ImageView showback);
     /**
-    * 展示日期
-    * */
-    void showDataText(RecyclerView recyclerView);
-    /**
     * 展示计划
     * */
-    void showPlanText(RecyclerView recyclerView);
+    void showPlanText(RecyclerView planDate,RecyclerView showPlan,int Id,String time);
 }

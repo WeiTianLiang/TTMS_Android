@@ -1,16 +1,16 @@
 package com.example.wtl.ttms_hdd.BuyTicket.view.activity;
 
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.wtl.ttms_hdd.BuyTicket.presenter.BuyTicketPresentCompl;
@@ -65,33 +65,38 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
     * */
     private RecyclerView show_plan;
 
+    private String Id;
+    private String time;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_ticket);
         HideScreenTop.HideScreenTop(getWindow());
+        String name = getIntent().getStringExtra("name");
+        Id = getIntent().getStringExtra("Id");
+        time = getIntent().getStringExtra("time");
         Montior();
         if(presenter == null) {
             presenter = new BuyTicketPresentCompl(this);
         }
-        String name = getIntent().getStringExtra("name");
         presenter.showDetail(name,ticket_img,buy_name,buy_type,buy_durtion,text_details,showback);
     }
 
     private void Montior() {
-        ticket_img = findViewById(R.id.ticket_img);
+        ticket_img = (ImageView) findViewById(R.id.ticket_img);
         Glide.with(this)
                 .load("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=178339431,3551923999&fm=27&gp=0.jpg")
                 .into(ticket_img);
-        buy_name = findViewById(R.id.buy_name);
-        buy_type = findViewById(R.id.buy_type);
-        buy_durtion = findViewById(R.id.buy_durtion);
-        buyback = findViewById(R.id.buyback);
-        text_details = findViewById(R.id.text_details);
-        showback = findViewById(R.id.showback);
-        top = findViewById(R.id.top);
-        data_show = findViewById(R.id.data_show);
-        show_plan = findViewById(R.id.show_plan);
+        buy_name = (TextView) findViewById(R.id.buy_name);
+        buy_type = (TextView) findViewById(R.id.buy_type);
+        buy_durtion = (TextView) findViewById(R.id.buy_durtion);
+        buyback = (ImageView) findViewById(R.id.buyback);
+        text_details = (TextView) findViewById(R.id.text_details);
+        showback = (ImageView) findViewById(R.id.showback);
+        top = (RelativeLayout) findViewById(R.id.top);
+        data_show = (RecyclerView) findViewById(R.id.data_show);
+        show_plan = (RecyclerView) findViewById(R.id.show_plan);
 
         top.getBackground().setAlpha(240);
 
@@ -107,8 +112,7 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
         if(presenter == null) {
             presenter = new BuyTicketPresentCompl(this);
         }
-        presenter.showDataText(data_show);
-        presenter.showPlanText(show_plan);
+        presenter.showPlanText(data_show,show_plan,Integer.parseInt(Id),time);
     }
 
     @Override

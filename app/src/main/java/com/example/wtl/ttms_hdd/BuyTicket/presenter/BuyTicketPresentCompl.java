@@ -2,31 +2,29 @@ package com.example.wtl.ttms_hdd.BuyTicket.presenter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.SparseArray;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.wtl.ttms_hdd.BuyTicket.model.DataModel;
+import com.example.wtl.ttms_hdd.BuyTicket.model.DataPlanModel;
 import com.example.wtl.ttms_hdd.BuyTicket.model.FilmdetailModel;
+import com.example.wtl.ttms_hdd.BuyTicket.model.PlanAll;
 import com.example.wtl.ttms_hdd.BuyTicket.model.PlanModel;
 import com.example.wtl.ttms_hdd.BuyTicket.presenter.adapter.Data_showAdapter;
 import com.example.wtl.ttms_hdd.BuyTicket.presenter.adapter.Show_PlanAdapter;
 import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
-import com.example.wtl.ttms_hdd.R;
+import com.example.wtl.ttms_hdd.Tool.PackageGson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,23 +42,22 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
         this.context = context;
     }
 
-    private List<PlanModel> planModelList = new ArrayList<>();
-    private List<PlanModel> planModelList1 = new ArrayList<>();
-    private List<PlanModel> planModelList2 = new ArrayList<>();
-    private List<PlanModel> planModelList3 = new ArrayList<>();
-    private List<PlanModel> planModelList4 = new ArrayList<>();
-
-    private Map<String,List<PlanModel>> planModeMap = new ArrayMap<>();
+    private Map<String, List<PlanModel>> planModeMap1 = new ArrayMap<>();
 
     private Show_PlanAdapter planadapter;
 
-    private List<DataModel> models;
+    private List<String> models1;
+
+    private List<PlanAll> planAlls = new ArrayList<>();
+
+    private GetFilmDetial_Inference request;
+
+    private String time;
 
     @Override
     public void showDetail(String name, final ImageView ticket_img, final TextView buy_name, final TextView buy_type, final TextView buy_durtion, final TextView text_details, final ImageView showback) {
-        GetFilmDetial_Inference request = CreateRetrofit.requestRetrofit(null).create(GetFilmDetial_Inference.class);
+        request = CreateRetrofit.requestRetrofit(null).create(GetFilmDetial_Inference.class);
         Call<FilmdetailModel> call = request.getFilmDetail(name);
-        Log.e("阿斯顿发射点发射点", name);
         call.enqueue(new Callback<FilmdetailModel>() {
             @Override
             public void onResponse(Call<FilmdetailModel> call, final Response<FilmdetailModel> response) {
@@ -89,7 +86,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                         Log.e("onFailure", "数据不存在");
                     }
                 } else {
-                    Log.e("onFailure", "失败");
+                    Log.e("onFailure", "请求不成功");
                 }
             }
 
@@ -101,86 +98,152 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
     }
 
     @Override
-    public void showDataText(RecyclerView recyclerView) {
-        models = new ArrayList<>();
-        DataModel model = new DataModel("9月23日");
-        DataModel model1 = new DataModel("9月24日");
-        DataModel model2 = new DataModel("9月25日");
-        DataModel model3 = new DataModel("9月26日");
-        DataModel model4 = new DataModel("9月27日");
-        models.add(model);
-        models.add(model1);
-        models.add(model2);
-        models.add(model3);
-        models.add(model4);
-        Data_showAdapter adapter = new Data_showAdapter(context,models);
-        recyclerView.setAdapter(adapter);
-        adapter.setOnChangePlanData(new Data_showAdapter.OnChangePlanData() {
+    public void showPlanText(final RecyclerView planDate,final RecyclerView showPlan,int Id,String time) {
+        this.time = time;
+        Map<Object, Object> map = new HashMap<>();
+        map.put("programmeId", Id);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map));
+        request = CreateRetrofit.requestRetrofit(null).create(GetFilmDetial_Inference.class);
+        Call<DataPlanModel> call = request.getDataPlan(body);
+        call.enqueue(new Callback<DataPlanModel>() {
             @Override
-            public void ChangePlanData() {
+            public void onResponse(Call<DataPlanModel> call, Response<DataPlanModel> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        models1 = new ArrayList<>();
+                        for (int i = 0; i < response.body().getData().size(); i++) {
+                            String performance = response.body().getData().get(i).getPerformance();
+                            int price = response.body().getData().get(i).getPrice();
+                            String playDate = response.body().getData().get(i).getPlayDate();
+                            String theaterName = response.body().getData().get(i).getTheaterName();
 
+                            models1.add(getDate(playDate));
+                            PlanAll planAll = new PlanAll(getDate(playDate), changetime(performance, 0), changetime(performance, 1),
+                                    theaterName, String.valueOf(price));
+                            planAlls.add(planAll);
+                        }
+                        for (int i = 0; i < models1.size(); i++) {
+                            List<PlanModel> planModels1 = new ArrayList<>();
+                            for (int j = 0; j < planAlls.size(); j++) {
+                                if (models1.get(i).equals(planAlls.get(j).getDate())) {
+                                    PlanModel model = new PlanModel(planAlls.get(j).getStart_time(), planAlls.get(j).getEnd_time()
+                                            , planAlls.get(j).getThreat_name(), planAlls.get(j).getTicket_price());
+                                    planModels1.add(model);
+                                }
+                            }
+                            planModeMap1.put(models1.get(i), planModels1);
+                        }
+
+                        ((Activity) context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Data_showAdapter adapter = new Data_showAdapter(context, models1);
+                                planDate.setAdapter(adapter);
+                                adapter.setOnChangePlanData(new Data_showAdapter.OnChangePlanData() {
+                                    @Override
+                                    public void ChangePlanData(String date) {
+                                        planadapter.changeData(planModeMap1.get(date));
+                                    }
+                                });
+
+                                planadapter = new Show_PlanAdapter(context,planModeMap1.get(models1.get(0)));
+                                showPlan.setAdapter(planadapter);
+                            }
+                        });
+                    } else {
+                        Log.e("onFailure", "请求数据为空！！！");
+                    }
+                } else {
+                    Log.e("onFailure", "请求不成功！！！");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataPlanModel> call, Throwable t) {
+                Log.e("onFailure", t.getMessage() + "失败");
             }
         });
     }
-
-    @Override
-    public void showPlanText(RecyclerView recyclerView) {
-        dataa(models);
-        for(int i = 0 ; i < models.size() ; i++) {
-            planModeMap.put(models.get(i).getData(),planModelList);
-        }
-        planadapter = new Show_PlanAdapter(context,planModelList);
-        recyclerView.setAdapter(planadapter);
+    /**
+     * 改变日期格式
+     */
+    private String getDate(String date) {
+        String[] dates = date.split("T");
+        String[] times = dates[0].split("-");
+        String d = times[1] + "月" + times[2] + "日";
+        return d;
     }
 
-    private void dataa(List<DataModel> models) {
-        PlanModel model = new PlanModel("09:45","11:26散场","你懂得厅","100元");
-        PlanModel model1 = new PlanModel("11:45","13:26散场","擦拭的厅","10元");
-        PlanModel model2 = new PlanModel("14:45","16:26散场","为人体厅","90元");
-        PlanModel model3 = new PlanModel("18:45","24:26散场","的风格和厅","290元");
-        PlanModel model4 = new PlanModel("19:45","12:26散场","撒旦厅","190元");
-
-        planModelList.add(model);
-        planModelList.add(model);
-        planModelList.add(model);
-        planModelList.add(model);
-        planModelList.add(model);
-        planModelList.add(model);
-        planModelList.add(model);
-
-        planModelList1.add(model1);
-        planModelList1.add(model1);
-        planModelList1.add(model1);
-        planModelList1.add(model1);
-
-        planModelList2.add(model2);
-        planModelList2.add(model2);
-        planModelList2.add(model2);
-        planModelList2.add(model2);
-        planModelList2.add(model2);
-
-        planModelList3.add(model3);
-        planModelList3.add(model3);
-        planModelList3.add(model3);
-        planModelList3.add(model3);
-        planModelList3.add(model3);
-
-        planModelList4.add(model4);
-        planModelList4.add(model4);
-        planModelList4.add(model4);
-        planModelList4.add(model4);
-        planModelList4.add(model4);
-        planModelList4.add(model4);
-
-        List<List<PlanModel>> lists = new ArrayList<>();
-        lists.add(planModelList);
-        lists.add(planModelList1);
-        lists.add(planModelList2);
-        lists.add(planModelList3);
-        lists.add(planModelList4);
-
-        for(int i = 0 ; i < models.size() ; i++) {
-            planModeMap.put(models.get(i).getData(),lists.get(i));
+    private String changetime(String changetime, int c) {
+        switch (changetime) {
+            case "早一":
+                if (c == 0) {
+                    return "06:30";
+                } else {
+                    int h = Integer.parseInt(time) / 60;
+                    int m = Integer.parseInt(time) - h * 60;
+                    return addtime("06:30", h, m);
+                }
+            case "早二":
+                if (c == 0) {
+                    return "09:30";
+                } else {
+                    int h = Integer.parseInt(time) / 60;
+                    int m = Integer.parseInt(time) - h * 60;
+                    return addtime("09:30", h, m);
+                }
+            case "午一":
+                if (c == 0) {
+                    return "13:00";
+                } else {
+                    int h = Integer.parseInt(time) / 60;
+                    int m = Integer.parseInt(time) - h * 60;
+                    return addtime("13:30", h, m);
+                }
+            case "午二":
+                if (c == 0) {
+                    return "16:00";
+                } else {
+                    int h = Integer.parseInt(time) / 60;
+                    int m = Integer.parseInt(time) - h * 60;
+                    return addtime("16:30", h, m);
+                }
+            case "晚一":
+                if (c == 0) {
+                    return "19:00";
+                } else {
+                    int h = Integer.parseInt(time) / 60;
+                    int m = Integer.parseInt(time) - h * 60;
+                    return addtime("19:30", h, m);
+                }
+            case "晚二":
+                if (c == 0) {
+                    return "22:00";
+                } else {
+                    int h = Integer.parseInt(time) / 60;
+                    int m = Integer.parseInt(time) - h * 60;
+                    return addtime("22:30", h, m);
+                }
+            case "午夜":
+                if (c == 0) {
+                    return "01:00";
+                } else {
+                    int h = Integer.parseInt(time) / 60;
+                    int m = Integer.parseInt(time) - h * 60;
+                    return addtime("01:30", h, m);
+                }
+            default:
+                break;
         }
+        return "wrong";
+    }
+
+    private String addtime(String t, int h, int m) {
+        String[] ts = t.split(":");
+        int t1 = Integer.parseInt(ts[0]);
+        int t2 = Integer.parseInt(ts[1]);
+        h = h + t1;
+        m = m + t2;
+        return String.valueOf(h) + ":" + String.valueOf(m);
     }
 }

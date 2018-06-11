@@ -2,14 +2,12 @@ package com.example.wtl.ttms_hdd.BuyTicket.presenter.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.wtl.ttms_hdd.BuyTicket.model.DataModel;
 import com.example.wtl.ttms_hdd.R;
 
 import java.util.ArrayList;
@@ -22,13 +20,13 @@ import java.util.List;
 
 public class Data_showAdapter extends RecyclerView.Adapter<Data_showAdapter.ViewHolder> {
 
-    private List<DataModel> dataModelList;
+    private List<String> dataModelList;
     private Context context;
     private ViewHolder viewHolder;
     private List<Boolean> isclick = new ArrayList<>();
     private OnChangePlanData changePlanData;
 
-    public Data_showAdapter(Context context, List<DataModel> dataModelList) {
+    public Data_showAdapter(Context context, List<String> dataModelList) {
         this.context = context;
         this.dataModelList = dataModelList;
         for (int i = 0; i < dataModelList.size(); i++) {
@@ -49,8 +47,8 @@ public class Data_showAdapter extends RecyclerView.Adapter<Data_showAdapter.View
 
     @Override
     public void onBindViewHolder(final Data_showAdapter.ViewHolder holder, final int position) {
-        DataModel dataModel = dataModelList.get(position);
-        holder.showdata.setText(dataModel.getData());
+        String dataModel = dataModelList.get(position);
+        holder.showdata.setText(dataModel);
         if (isclick.get(position)) {
             holder.line.setVisibility(View.VISIBLE);
         } else {
@@ -66,7 +64,7 @@ public class Data_showAdapter extends RecyclerView.Adapter<Data_showAdapter.View
                 notifyDataSetChanged();
 
                 if (changePlanData != null) {
-                    changePlanData.ChangePlanData();
+                    changePlanData.ChangePlanData(holder.showdata.getText().toString());
                 }
             }
         });
@@ -92,7 +90,7 @@ public class Data_showAdapter extends RecyclerView.Adapter<Data_showAdapter.View
     }
 
     public interface OnChangePlanData {
-        void ChangePlanData();
+        void ChangePlanData(String date);
     }
 
 

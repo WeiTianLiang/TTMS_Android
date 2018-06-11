@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class PackageGson {
 
-    public static String PacketGson(Map<String,Object> map) {
+    public static String PacketGson(Map<Object,Object> map) {
         Gson gson = new Gson();
         String jsonData = gson.toJson(map);
         return jsonData;

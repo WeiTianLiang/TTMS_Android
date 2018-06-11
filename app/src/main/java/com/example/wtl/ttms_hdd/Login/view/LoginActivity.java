@@ -81,15 +81,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * 连接界面
      */
     private void Montior() {
-        input_account = findViewById(R.id.input_account);
-        input_password = findViewById(R.id.input_password);
-        main_login = findViewById(R.id.main_login);
-        forgot_password = findViewById(R.id.forgot_password);
-        toregister = findViewById(R.id.toregister);
-        clear_account = findViewById(R.id.clear_account);
-        clear_password = findViewById(R.id.clear_password);
-        get_validate = findViewById(R.id.get_validate);
-        input_validate = findViewById(R.id.input_validate);
+        input_account = (EditText) findViewById(R.id.input_account);
+        input_password = (EditText) findViewById(R.id.input_password);
+        main_login = (TextView) findViewById(R.id.main_login);
+        forgot_password = (TextView) findViewById(R.id.forgot_password);
+        toregister = (TextView) findViewById(R.id.toregister);
+        clear_account = (ImageView) findViewById(R.id.clear_account);
+        clear_password = (ImageView) findViewById(R.id.clear_password);
+        get_validate = (ImageView) findViewById(R.id.get_validate);
+        input_validate = (EditText) findViewById(R.id.input_validate);
 
         main_login.setOnClickListener(this);
         forgot_password.setOnClickListener(this);

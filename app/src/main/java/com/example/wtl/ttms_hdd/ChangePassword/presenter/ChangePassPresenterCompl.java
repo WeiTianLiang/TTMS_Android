@@ -77,7 +77,7 @@ public class ChangePassPresenterCompl implements IChangePassPresenter {
     }
 
     private void changePass(int userId, String pass) {
-        Map<String, Object> changeMap = new HashMap<>();
+        Map<Object, Object> changeMap = new HashMap<>();
         changeMap.put("id", userId);
         changeMap.put("password", pass);
 

@@ -1,7 +1,10 @@
 package com.example.wtl.ttms_hdd.BuyTicket.presenter.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wtl.ttms_hdd.BuyTicket.model.PlanModel;
+import com.example.wtl.ttms_hdd.DrawSiteToBuy.view.ShowBuySiteActivity;
 import com.example.wtl.ttms_hdd.R;
 
 import java.util.List;
@@ -23,6 +27,8 @@ public class Show_PlanAdapter extends RecyclerView.Adapter<Show_PlanAdapter.View
 
     private List<PlanModel> planModelList;
     private Context context;
+
+    private OnChangeItemPlan changeItemPlan;
 
     public Show_PlanAdapter(Context context, List<PlanModel> planModelList) {
         this.context = context;
@@ -46,13 +52,17 @@ public class Show_PlanAdapter extends RecyclerView.Adapter<Show_PlanAdapter.View
         holder.ticket_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "买票功能尚未开发，等着去", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, ShowBuySiteActivity.class);
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
             }
         });
         holder.ticket_buy1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "买票功能尚未开发，等着去", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, ShowBuySiteActivity.class);
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
             }
         });
     }
@@ -64,9 +74,7 @@ public class Show_PlanAdapter extends RecyclerView.Adapter<Show_PlanAdapter.View
 
     public void changeData(List<PlanModel> planModel) {
         planModelList.removeAll(planModel);
-        for (PlanModel model : planModel) {
-            planModelList.add(model);
-        }
+        planModelList = planModel;
         notifyDataSetChanged();
     }
 
@@ -89,4 +97,13 @@ public class Show_PlanAdapter extends RecyclerView.Adapter<Show_PlanAdapter.View
             ticket_buy1 = itemView.findViewById(R.id.ticket_buy1);
         }
     }
+
+    public interface OnChangeItemPlan {
+        void onChangeItemPlan(int position);
+    }
+
+    public void setOnChangeItemPlan(OnChangeItemPlan changeItemPlan) {
+        this.changeItemPlan = changeItemPlan;
+    }
+
 }

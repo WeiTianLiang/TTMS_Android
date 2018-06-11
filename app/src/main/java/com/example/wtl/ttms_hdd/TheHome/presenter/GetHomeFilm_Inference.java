@@ -1,7 +1,6 @@
 package com.example.wtl.ttms_hdd.TheHome.presenter;
 
 import com.example.wtl.ttms_hdd.TheHome.model.HotSowModel;
-import com.example.wtl.ttms_hdd.TheHome.model.WillShowModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -17,6 +16,6 @@ public interface GetHomeFilm_Inference {
     Call<HotSowModel> getHotShow();
 
     @GET("/Programme")
-    Call<WillShowModel> getWillShow();
+    Call<HotSowModel> getWillShow();
 
 }

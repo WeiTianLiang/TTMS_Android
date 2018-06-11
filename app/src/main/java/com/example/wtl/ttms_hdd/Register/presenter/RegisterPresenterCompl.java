@@ -56,7 +56,7 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
         if (name == null || account == null || password == null || sex == null || tel == null || re_password == null || !re_password.equals(password)) {
             Toast.makeText(context, "注册失败!数据不能为空!", Toast.LENGTH_SHORT).show();
         } else {
-            Map<String, Object> registerMap = new HashMap<>();
+            Map<Object, Object> registerMap = new HashMap<>();
             registerMap.put("name", name);
             registerMap.put("account", account);
             registerMap.put("password", password);

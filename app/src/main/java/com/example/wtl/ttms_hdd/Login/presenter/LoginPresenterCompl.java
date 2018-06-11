@@ -57,7 +57,7 @@ public class LoginPresenterCompl implements ILoginPresenter {
             /*
             * 将数据封装成map
             * */
-            Map<String, Object> loginMap = new HashMap<>();
+            Map<Object, Object> loginMap = new HashMap<>();
             loginMap.put("account", account);
             loginMap.put("password", password);
             loginMap.put("verCode", verCode);

@@ -93,19 +93,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void Montior() {
-        register_back = findViewById(R.id.register_back);
-        register_input_account = findViewById(R.id.register_input_account);
-        register_input_password = findViewById(R.id.register_input_password);
-        repeat_input_password = findViewById(R.id.repeat_input_password);
-        register_clear_account = findViewById(R.id.register_clear_account);
-        register_clear_password = findViewById(R.id.register_clear_password);
-        repeat_clear_password = findViewById(R.id.repeat_clear_password);
-        main_register = findViewById(R.id.main_register);
-        register_input_phone = findViewById(R.id.register_input_phone);
-        register_input_name = findViewById(R.id.register_input_name);
-        register_clear_phone = findViewById(R.id.register_clear_phone);
-        register_clear_name = findViewById(R.id.register_clear_name);
-        sex_group = findViewById(R.id.sex_group);
+        register_back = (ImageView) findViewById(R.id.register_back);
+        register_input_account = (EditText) findViewById(R.id.register_input_account);
+        register_input_password = (EditText) findViewById(R.id.register_input_password);
+        repeat_input_password = (EditText) findViewById(R.id.repeat_input_password);
+        register_clear_account = (ImageView) findViewById(R.id.register_clear_account);
+        register_clear_password = (ImageView) findViewById(R.id.register_clear_password);
+        repeat_clear_password = (ImageView) findViewById(R.id.repeat_clear_password);
+        main_register = (TextView) findViewById(R.id.main_register);
+        register_input_phone = (EditText) findViewById(R.id.register_input_phone);
+        register_input_name = (EditText) findViewById(R.id.register_input_name);
+        register_clear_phone = (ImageView) findViewById(R.id.register_clear_phone);
+        register_clear_name = (ImageView) findViewById(R.id.register_clear_name);
+        sex_group = (RadioGroup) findViewById(R.id.sex_group);
 
         register_clear_account.setOnClickListener(this);
         register_clear_password.setOnClickListener(this);
@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 /*
                 * 获取选择的性别
                 * */
-                RadioButton sex = findViewById(i);
+                RadioButton sex = (RadioButton) findViewById(i);
                 sexString = sex.getText().toString();
             }
         });

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,14 +42,17 @@ public class HotShowAdapter extends RecyclerView.Adapter<HotShowAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(HotShowAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final HotShowAdapter.ViewHolder holder, int position) {
         final HotSowModel.data hotSowModel = hotSowModels.get(position);
         holder.willshow_image.setImageResource(R.drawable.ceshi);
         holder.willshow_name.setText(hotSowModel.getProgrammeName());
+        holder.programmeId = hotSowModel.getProgrammeId();
+        holder.programmeDruation = hotSowModel.getProgrammeDruation();
         holder.now_show_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpActivity.JumpActivity(context,BuyTicketActivity.class,hotSowModel.getProgrammeName());
+                JumpActivity.JumpActivity(context,BuyTicketActivity.class,hotSowModel.getProgrammeName()
+                        ,holder.programmeId,holder.programmeDruation);
             }
         });
     }
@@ -63,6 +67,8 @@ public class HotShowAdapter extends RecyclerView.Adapter<HotShowAdapter.ViewHold
         ImageView willshow_image;
         TextView willshow_name;
         LinearLayout now_show_id;
+        int programmeId;
+        String programmeDruation;
 
         public ViewHolder(View itemView) {
             super(itemView);

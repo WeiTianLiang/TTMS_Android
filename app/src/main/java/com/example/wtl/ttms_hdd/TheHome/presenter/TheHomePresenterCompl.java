@@ -6,12 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
-import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.TheHome.model.HotSowModel;
-import com.example.wtl.ttms_hdd.TheHome.model.WillShowModel;
 import com.example.wtl.ttms_hdd.TheHome.presenter.adapter.HotShowAdapter;
 import com.example.wtl.ttms_hdd.TheHome.presenter.adapter.ImageGlideAdapter;
-import com.example.wtl.ttms_hdd.TheHome.presenter.adapter.WillShowAdapter;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -32,7 +29,7 @@ public class TheHomePresenterCompl implements ITheHomePresenter {
     private Context context;
 
     private List<HotSowModel.data> hotSowModels = new ArrayList<>();
-    private List<WillShowModel.data> willShowModels = new ArrayList<>();
+    private List<HotSowModel.data> willShowModels = new ArrayList<>();
 
     public TheHomePresenterCompl(Context context) {
         this.context = context;
@@ -93,20 +90,20 @@ public class TheHomePresenterCompl implements ITheHomePresenter {
     @Override
     public void setWillAdapter(final RecyclerView recyclerView) {
         GetHomeFilm_Inference request = CreateRetrofit.requestRetrofit(null).create(GetHomeFilm_Inference.class);
-        Call<WillShowModel> call = request.getWillShow();
-        call.enqueue(new Callback<WillShowModel>() {
+        Call<HotSowModel> call = request.getWillShow();
+        call.enqueue(new Callback<HotSowModel>() {
             @Override
-            public void onResponse(Call<WillShowModel> call, final Response<WillShowModel> response) {
+            public void onResponse(Call<HotSowModel> call, final Response<HotSowModel> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getResult() == 200) {
                             ((Activity) context).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    for(WillShowModel.data data:response.body().getData()) {
+                                    for(HotSowModel.data data:response.body().getData()) {
                                         willShowModels.add(data);
                                     }
-                                    WillShowAdapter adapter = new WillShowAdapter(context,willShowModels);
+                                    HotShowAdapter adapter = new HotShowAdapter(context,willShowModels);
                                     recyclerView.setAdapter(adapter);
                                 }
                             });
@@ -122,7 +119,7 @@ public class TheHomePresenterCompl implements ITheHomePresenter {
             }
 
             @Override
-            public void onFailure(Call<WillShowModel> call, Throwable t) {
+            public void onFailure(Call<HotSowModel> call, Throwable t) {
                 Log.e("onFailure", t.getMessage() + "失败");
             }
         });

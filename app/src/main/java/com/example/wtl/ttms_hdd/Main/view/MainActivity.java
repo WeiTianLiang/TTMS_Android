@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         HideScreenTop.HideScreenTop(getWindow());
-        bottom_navigation = findViewById(R.id.bottom_navigation);
+        bottom_navigation = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
         /*
         * 设置样式
         * */

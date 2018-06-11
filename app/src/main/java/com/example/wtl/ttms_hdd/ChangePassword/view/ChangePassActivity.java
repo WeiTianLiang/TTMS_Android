@@ -64,14 +64,14 @@ public class ChangePassActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void Montior() {
-        main_change = findViewById(R.id.main_change);
-        register_back = findViewById(R.id.register_back);
-        change_input_account = findViewById(R.id.change_input_account);
-        change_input_password = findViewById(R.id.change_input_password);
-        change_re_password = findViewById(R.id.change_re_password);
-        change_clear_account = findViewById(R.id.change_clear_account);
-        change_clear_password = findViewById(R.id.change_clear_password);
-        change_rec_password = findViewById(R.id.change_rec_password);
+        main_change = (TextView) findViewById(R.id.main_change);
+        register_back = (ImageView) findViewById(R.id.register_back);
+        change_input_account = (EditText) findViewById(R.id.change_input_account);
+        change_input_password = (EditText) findViewById(R.id.change_input_password);
+        change_re_password = (EditText) findViewById(R.id.change_re_password);
+        change_clear_account = (ImageView) findViewById(R.id.change_clear_account);
+        change_clear_password = (ImageView) findViewById(R.id.change_clear_password);
+        change_rec_password = (ImageView) findViewById(R.id.change_rec_password);
 
         main_change.setOnClickListener(this);
         register_back.setOnClickListener(this);

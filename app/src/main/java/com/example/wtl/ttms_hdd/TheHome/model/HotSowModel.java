@@ -13,10 +13,20 @@ public class HotSowModel {
     private List<data> data;
 
     public class data {
+        private int programmeId;
         private String programmeName;
+        private String programmeDruation;
 
         public String getProgrammeName() {
             return programmeName;
+        }
+
+        public int getProgrammeId() {
+            return programmeId;
+        }
+
+        public String getProgrammeDruation() {
+            return programmeDruation;
         }
     }
 
