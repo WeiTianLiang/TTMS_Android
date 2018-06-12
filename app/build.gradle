@@ -31,9 +31,8 @@ dependencies {
     //Retrofit-Gson解析框架
     //okhttp3网络请求框架
     //BottomNavigation底部导航栏框架
-    //顶部导航栏沉浸式框架(尚未使用)
     //banner轮播图框架
-    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'

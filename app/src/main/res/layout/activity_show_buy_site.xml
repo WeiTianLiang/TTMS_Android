@@ -73,7 +73,7 @@
 
     </RelativeLayout>
 
-    <com.example.wtl.ttms_hdd.SeatToBuy.view.SeatView
+    <com.example.wtl.ttms_hdd.SeatToBuy.view.drawView.SeatView
         android:id="@+id/seats"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -91,5 +91,53 @@
         android:textColor="#fff"
         android:layout_alignParentBottom="true"
         android:background="#f1d8b4"/>
+
+    <LinearLayout
+        android:id="@+id/chooseon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#fff"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#dcdcdc"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已选座位"
+            android:textColor="#000"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/isbuy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"/>
+
+        <TextView
+            android:id="@+id/paymoney"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:background="@drawable/paymoney"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -6,4 +6,6 @@
     <color name="white">#FFFFFF</color>
     <color name="nav_gray">#a7a7a7</color>
     <color name="changeclick">#fa2020</color>
+
+    <color name="dropbackground">#fafafa</color>
 </resources>

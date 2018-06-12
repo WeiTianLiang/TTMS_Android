@@ -1,4 +1,4 @@
-package com.example.wtl.ttms_hdd.SeatToBuy.view;
+package com.example.wtl.ttms_hdd.SeatToBuy.view.drawView;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -15,7 +15,6 @@ import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;

@@ -3,6 +3,7 @@ package com.example.wtl.ttms_hdd.BuyTicket.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -60,6 +61,8 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
     private String time;
 
     private String name;
+
+    private int price;
 
     @Override
     public void showDetail(String name, final ImageView ticket_img, final TextView buy_name, final TextView buy_type, final TextView buy_durtion, final TextView text_details, final ImageView showback) {
@@ -121,7 +124,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                         models1 = new ArrayList<>();
                         for (int i = 0; i < response.body().getData().size(); i++) {
                             String performance = response.body().getData().get(i).getPerformance();
-                            int price = response.body().getData().get(i).getPrice();
+                            price = response.body().getData().get(i).getPrice();
                             String playDate = response.body().getData().get(i).getPlayDate();
                             String theaterName = response.body().getData().get(i).getTheaterName();
                             int goodId = response.body().getData().get(i).getGoodId();
@@ -168,6 +171,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                                         intent.putExtra("threat_name", threat_name);
                                         intent.putExtra("threaterId", String.valueOf(threaterId));
                                         intent.putExtra("goodId", String.valueOf(goodId));
+                                        intent.putExtra("price",String.valueOf(price));
                                         context.startActivity(intent);
                                         ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
                                     }

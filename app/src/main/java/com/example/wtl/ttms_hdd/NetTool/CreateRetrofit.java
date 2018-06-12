@@ -21,13 +21,13 @@ public class CreateRetrofit {
         * */
         if(str!=null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://123.206.82.241:8080")
+                    .baseUrl("http://123.206.82.241:8081")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(AddHeader.addHeadersClient(str))
                     .build();
         } else {
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://123.206.82.241:8080")
+                    .baseUrl("http://123.206.82.241:8081")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
