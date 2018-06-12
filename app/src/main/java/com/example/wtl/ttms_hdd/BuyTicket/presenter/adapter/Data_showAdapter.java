@@ -90,6 +90,8 @@ public class Data_showAdapter extends RecyclerView.Adapter<Data_showAdapter.View
         TextView showdata;
         View line;
         LinearLayout clickdata;
+        int goodId;
+        int theaterId;
 
         public ViewHolder(View itemView) {
             super(itemView);

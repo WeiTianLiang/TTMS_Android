@@ -35,6 +35,9 @@ public class ShowBuySiteActivity extends AppCompatActivity implements View.OnCli
         String startime = getIntent().getStringExtra("startime");
         String date = getIntent().getStringExtra("date");
         String threatname = getIntent().getStringExtra("threat_name");
+        String goodId = getIntent().getStringExtra("goodId");
+        String threaterId = getIntent().getStringExtra("threaterId");
+        Log.d("qqqqqqqqqqqqqqqqqqqq",threaterId);
         Montior();
         ticketname.setText(name);
         ticketdate.setText(date);
@@ -43,7 +46,7 @@ public class ShowBuySiteActivity extends AppCompatActivity implements View.OnCli
         if(presenter == null) {
             presenter = new SeatToBuyPresenterCompl(this);
         }
-        presenter.getSeatNumber(seats);
+        presenter.getSeatNumber(seats,threaterId);
     }
 
     private void Montior() {

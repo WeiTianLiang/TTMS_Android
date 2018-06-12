@@ -916,7 +916,7 @@ public class SeatView extends View {
                                 }
                             } else {
                                 if (selects.size() >= maxSelected) {
-                                    Toast.makeText(getContext(), "最多只能选择" + maxSelected + "个", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "亲!每人只能买" + maxSelected + "张", Toast.LENGTH_SHORT).show();
                                     return super.onSingleTapConfirmed(e);
                                 } else {
                                     addChooseSeat(i, j);

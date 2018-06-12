@@ -12,13 +12,17 @@ public class PlanAll {
     private String end_time;
     private String threat_name;
     private String ticket_price;
+    private int goodId;
+    private int threaterId;
 
-    public PlanAll(String date,String start_time,String end_time,String threat_name,String ticket_price) {
+    public PlanAll(int goodId,int threaterId,String date,String start_time,String end_time,String threat_name,String ticket_price) {
         this.date = date;
         this.start_time = start_time;
         this.end_time = end_time;
         this.threat_name = threat_name;
         this.ticket_price = ticket_price;
+        this.goodId = goodId;
+        this.threaterId = threaterId;
     }
 
     public String getEnd_time() {
@@ -39,5 +43,13 @@ public class PlanAll {
 
     public String getDate() {
         return date;
+    }
+
+    public int getGoodId() {
+        return goodId;
+    }
+
+    public int getThreaterId() {
+        return threaterId;
     }
 }

@@ -2,6 +2,7 @@ package com.example.wtl.ttms_hdd.BuyTicket.presenter.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,15 +47,17 @@ public class Show_PlanAdapter extends RecyclerView.Adapter<Show_PlanAdapter.View
         holder.ticket_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toNextActivity.toNextActivity(position, holder.threat_name.getText().toString());
+                toNextActivity.toNextActivity(position, holder.threat_name.getText().toString(),holder.good_Id,holder.threater_Id);
             }
         });
         holder.ticket_buy1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toNextActivity.toNextActivity(position, holder.threat_name.getText().toString());
+                toNextActivity.toNextActivity(position, holder.threat_name.getText().toString(),holder.good_Id,holder.threater_Id);
             }
         });
+        holder.threater_Id = planModel.getThreater_Id();
+        holder.good_Id = planModel.getGood_Id();
     }
 
     @Override
@@ -76,6 +79,8 @@ public class Show_PlanAdapter extends RecyclerView.Adapter<Show_PlanAdapter.View
         TextView ticket_price;
         TextView ticket_buy;
         RelativeLayout ticket_buy1;
+        int threater_Id;
+        int good_Id;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -89,7 +94,7 @@ public class Show_PlanAdapter extends RecyclerView.Adapter<Show_PlanAdapter.View
     }
 
     public interface OnToNextActivity {
-        void toNextActivity(int position, String threat_name);
+        void toNextActivity(int position, String threat_name,int goodId,int threaterId);
     }
 
     public void setOnToNextActivity(OnToNextActivity toNextActivity) {

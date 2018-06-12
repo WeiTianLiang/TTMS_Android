@@ -124,9 +124,11 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                             int price = response.body().getData().get(i).getPrice();
                             String playDate = response.body().getData().get(i).getPlayDate();
                             String theaterName = response.body().getData().get(i).getTheaterName();
+                            int goodId = response.body().getData().get(i).getGoodId();
+                            int threaterId = response.body().getData().get(i).getTheaterId();
 
                             models1.add(getDate(playDate));
-                            PlanAll planAll = new PlanAll(getDate(playDate), changetime(performance, 0), changetime(performance, 1),
+                            PlanAll planAll = new PlanAll(goodId, threaterId, getDate(playDate), changetime(performance, 0), changetime(performance, 1),
                                     theaterName, String.valueOf(price));
                             planAlls.add(planAll);
                         }
@@ -134,7 +136,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                             List<PlanModel> planModels1 = new ArrayList<>();
                             for (int j = 0; j < planAlls.size(); j++) {
                                 if (models1.get(i).equals(planAlls.get(j).getDate())) {
-                                    PlanModel model = new PlanModel(planAlls.get(j).getStart_time(), planAlls.get(j).getEnd_time()
+                                    PlanModel model = new PlanModel(planAlls.get(j).getGoodId(), planAlls.get(j).getThreaterId(), planAlls.get(j).getStart_time(), planAlls.get(j).getEnd_time()
                                             , planAlls.get(j).getThreat_name(), planAlls.get(j).getTicket_price());
                                     planModels1.add(model);
                                 }
@@ -158,12 +160,14 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                                 showPlan.setAdapter(planadapter);
                                 planadapter.setOnToNextActivity(new Show_PlanAdapter.OnToNextActivity() {
                                     @Override
-                                    public void toNextActivity(int position, String threat_name) {
+                                    public void toNextActivity(int position, String threat_name, int goodId, int threaterId) {
                                         Intent intent = new Intent(context, ShowBuySiteActivity.class);
                                         intent.putExtra("name", name);
                                         intent.putExtra("startime", planModeMap1.get(models1.get(0)).get(position).getStart_time());
                                         intent.putExtra("date", adapter.getNowDate());
                                         intent.putExtra("threat_name", threat_name);
+                                        intent.putExtra("threaterId", String.valueOf(threaterId));
+                                        intent.putExtra("goodId", String.valueOf(goodId));
                                         context.startActivity(intent);
                                         ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
                                     }
