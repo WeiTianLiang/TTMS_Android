@@ -38,7 +38,7 @@ public class ShowBuySiteActivity extends AppCompatActivity implements View.OnCli
         Montior();
         ticketname.setText(name);
         ticketdate.setText(date);
-        ticketime.setText(startime);        
+        ticketime.setText(startime);
         sitename.setText(threatname);
         if(presenter == null) {
             presenter = new SeatToBuyPresenterCompl(this);
