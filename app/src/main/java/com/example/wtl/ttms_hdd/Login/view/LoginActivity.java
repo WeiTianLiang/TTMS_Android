@@ -1,5 +1,6 @@
 package com.example.wtl.ttms_hdd.Login.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.example.wtl.ttms_hdd.ChangePassword.view.ChangePassActivity;
 import com.example.wtl.ttms_hdd.Login.presenter.ILoginPresenter;
 import com.example.wtl.ttms_hdd.Login.presenter.LoginPresenterCompl;
+import com.example.wtl.ttms_hdd.Main.view.MainActivity;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Tool.ClearEditText;
 import com.example.wtl.ttms_hdd.Tool.HideScreenTop;

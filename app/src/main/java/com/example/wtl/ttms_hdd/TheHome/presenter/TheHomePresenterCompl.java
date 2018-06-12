@@ -9,6 +9,7 @@ import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
 import com.example.wtl.ttms_hdd.TheHome.model.HotSowModel;
 import com.example.wtl.ttms_hdd.TheHome.presenter.adapter.HotShowAdapter;
 import com.example.wtl.ttms_hdd.TheHome.presenter.adapter.ImageGlideAdapter;
+import com.example.wtl.ttms_hdd.Tool.FileOperate;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class TheHomePresenterCompl implements ITheHomePresenter {
 
     @Override
     public void setHotAdapter(final RecyclerView recyclerView) {
-        GetHomeFilm_Inference request = CreateRetrofit.requestRetrofit(null).create(GetHomeFilm_Inference.class);
+        GetHomeFilm_Inference request = CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetHomeFilm_Inference.class);
         Call<HotSowModel> call = request.getHotShow();
         call.enqueue(new Callback<HotSowModel>() {
             @Override
@@ -89,7 +90,7 @@ public class TheHomePresenterCompl implements ITheHomePresenter {
 
     @Override
     public void setWillAdapter(final RecyclerView recyclerView) {
-        GetHomeFilm_Inference request = CreateRetrofit.requestRetrofit(null).create(GetHomeFilm_Inference.class);
+        GetHomeFilm_Inference request = CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetHomeFilm_Inference.class);
         Call<HotSowModel> call = request.getWillShow();
         call.enqueue(new Callback<HotSowModel>() {
             @Override

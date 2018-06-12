@@ -20,6 +20,7 @@ import com.example.wtl.ttms_hdd.BuyTicket.presenter.adapter.Show_PlanAdapter;
 import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.SeatToBuy.view.ShowBuySiteActivity;
+import com.example.wtl.ttms_hdd.Tool.FileOperate;
 import com.example.wtl.ttms_hdd.Tool.PackageGson;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
     @Override
     public void showDetail(String name, final ImageView ticket_img, final TextView buy_name, final TextView buy_type, final TextView buy_durtion, final TextView text_details, final ImageView showback) {
         this.name = name;
-        request = CreateRetrofit.requestRetrofit(null).create(GetFilmDetial_Inference.class);
+        request = CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetFilmDetial_Inference.class);
         Call<FilmdetailModel> call = request.getFilmDetail(name);
         call.enqueue(new Callback<FilmdetailModel>() {
             @Override
@@ -110,7 +111,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
         Map<Object, Object> map = new HashMap<>();
         map.put("programmeId", Id);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map));
-        request = CreateRetrofit.requestRetrofit(null).create(GetFilmDetial_Inference.class);
+        request = CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetFilmDetial_Inference.class);
         Call<DataPlanModel> call = request.getDataPlan(body);
         call.enqueue(new Callback<DataPlanModel>() {
             @Override

@@ -13,6 +13,7 @@ import com.example.wtl.ttms_hdd.Film.model.FilmModel;
 import com.example.wtl.ttms_hdd.Film.presenter.adapter.FilmShowAdapter;
 import com.example.wtl.ttms_hdd.Film.presenter.adapter.HDDPagerAdapter;
 import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
+import com.example.wtl.ttms_hdd.Tool.FileOperate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class FilmResenterCompl implements IFilmPresenter {
 
     @Override
     public void setFilmSellAdapter(final RecyclerView recyclerView, final Context context) {
-        GetFilm_Inference request = CreateRetrofit.requestRetrofit(null).create(GetFilm_Inference.class);
+        GetFilm_Inference request = CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetFilm_Inference.class);
         Call<FilmModel> call = request.getFilmBase();
         call.enqueue(new Callback<FilmModel>() {
             @Override

@@ -48,6 +48,7 @@ public class LoginPresenterCompl implements ILoginPresenter {
      * 获取服务器发来的请求头
      */
     private String sessionId = null;
+    private String sessionId2 = null;
 
     @Override
     public void doLogin(String account, String password, String verCode) {
@@ -80,6 +81,13 @@ public class LoginPresenterCompl implements ILoginPresenter {
                         Log.e("asdasdsa",response.body().getResult()+"");
                         Log.e("asdasdsa",response.body().getMsg());
                         if (response.body() != null) {
+                            sessionId2 = response.headers().toString();
+                            if(sessionId2 == null) {
+                                Log.e("asdasdasdasd","kong");
+                            } else {
+                                Log.e("asdasdasdasd",response.headers().toString());
+                            }
+//                            FileOperate.writeFile(sessionId2,context);
                             if (response.body().getResult() == 200) {
                                 Intent intent = new Intent(context, MainActivity.class);
                                 context.startActivity(intent);
