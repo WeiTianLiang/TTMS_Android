@@ -1,19 +1,14 @@
 package com.example.wtl.ttms_hdd.BuyTicket.presenter.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wtl.ttms_hdd.BuyTicket.model.PlanModel;
-import com.example.wtl.ttms_hdd.DrawSiteToBuy.view.ShowBuySiteActivity;
 import com.example.wtl.ttms_hdd.R;
 
 import java.util.List;
@@ -27,8 +22,7 @@ public class Show_PlanAdapter extends RecyclerView.Adapter<Show_PlanAdapter.View
 
     private List<PlanModel> planModelList;
     private Context context;
-
-    private OnChangeItemPlan changeItemPlan;
+    private OnToNextActivity toNextActivity;
 
     public Show_PlanAdapter(Context context, List<PlanModel> planModelList) {
         this.context = context;
@@ -43,7 +37,7 @@ public class Show_PlanAdapter extends RecyclerView.Adapter<Show_PlanAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         PlanModel planModel = planModelList.get(position);
         holder.start_time.setText(planModel.getStart_time());
         holder.end_time.setText(planModel.getEnd_time());
@@ -52,17 +46,13 @@ public class Show_PlanAdapter extends RecyclerView.Adapter<Show_PlanAdapter.View
         holder.ticket_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ShowBuySiteActivity.class);
-                context.startActivity(intent);
-                ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
+                toNextActivity.toNextActivity(position, holder.threat_name.getText().toString());
             }
         });
         holder.ticket_buy1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ShowBuySiteActivity.class);
-                context.startActivity(intent);
-                ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
+                toNextActivity.toNextActivity(position, holder.threat_name.getText().toString());
             }
         });
     }
@@ -98,12 +88,12 @@ public class Show_PlanAdapter extends RecyclerView.Adapter<Show_PlanAdapter.View
         }
     }
 
-    public interface OnChangeItemPlan {
-        void onChangeItemPlan(int position);
+    public interface OnToNextActivity {
+        void toNextActivity(int position, String threat_name);
     }
 
-    public void setOnChangeItemPlan(OnChangeItemPlan changeItemPlan) {
-        this.changeItemPlan = changeItemPlan;
+    public void setOnToNextActivity(OnToNextActivity toNextActivity) {
+        this.toNextActivity = toNextActivity;
     }
 
 }

@@ -2,11 +2,13 @@ package com.example.wtl.ttms_hdd.BuyTicket.presenter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.wtl.ttms_hdd.BuyTicket.model.DataPlanModel;
@@ -16,6 +18,8 @@ import com.example.wtl.ttms_hdd.BuyTicket.model.PlanModel;
 import com.example.wtl.ttms_hdd.BuyTicket.presenter.adapter.Data_showAdapter;
 import com.example.wtl.ttms_hdd.BuyTicket.presenter.adapter.Show_PlanAdapter;
 import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
+import com.example.wtl.ttms_hdd.R;
+import com.example.wtl.ttms_hdd.SeatToBuy.view.ShowBuySiteActivity;
 import com.example.wtl.ttms_hdd.Tool.PackageGson;
 
 import java.util.ArrayList;
@@ -54,8 +58,11 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
 
     private String time;
 
+    private String name;
+
     @Override
     public void showDetail(String name, final ImageView ticket_img, final TextView buy_name, final TextView buy_type, final TextView buy_durtion, final TextView text_details, final ImageView showback) {
+        this.name = name;
         request = CreateRetrofit.requestRetrofit(null).create(GetFilmDetial_Inference.class);
         Call<FilmdetailModel> call = request.getFilmDetail(name);
         call.enqueue(new Callback<FilmdetailModel>() {
@@ -98,7 +105,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
     }
 
     @Override
-    public void showPlanText(final RecyclerView planDate,final RecyclerView showPlan,int Id,String time) {
+    public void showPlanText(final RecyclerView planDate, final RecyclerView showPlan, int Id, String time) {
         this.time = time;
         Map<Object, Object> map = new HashMap<>();
         map.put("programmeId", Id);
@@ -137,7 +144,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                         ((Activity) context).runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Data_showAdapter adapter = new Data_showAdapter(context, models1);
+                                final Data_showAdapter adapter = new Data_showAdapter(context, models1);
                                 planDate.setAdapter(adapter);
                                 adapter.setOnChangePlanData(new Data_showAdapter.OnChangePlanData() {
                                     @Override
@@ -146,8 +153,20 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                                     }
                                 });
 
-                                planadapter = new Show_PlanAdapter(context,planModeMap1.get(models1.get(0)));
+                                planadapter = new Show_PlanAdapter(context, planModeMap1.get(models1.get(0)));
                                 showPlan.setAdapter(planadapter);
+                                planadapter.setOnToNextActivity(new Show_PlanAdapter.OnToNextActivity() {
+                                    @Override
+                                    public void toNextActivity(int position, String threat_name) {
+                                        Intent intent = new Intent(context, ShowBuySiteActivity.class);
+                                        intent.putExtra("name", name);
+                                        intent.putExtra("startime", planModeMap1.get(models1.get(0)).get(position).getStart_time());
+                                        intent.putExtra("date", adapter.getNowDate());
+                                        intent.putExtra("threat_name", threat_name);
+                                        context.startActivity(intent);
+                                        ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
+                                    }
+                                });
                             }
                         });
                     } else {
@@ -164,6 +183,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
             }
         });
     }
+
     /**
      * 改变日期格式
      */
@@ -244,6 +264,18 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
         int t2 = Integer.parseInt(ts[1]);
         h = h + t1;
         m = m + t2;
-        return String.valueOf(h) + ":" + String.valueOf(m);
+        String h1;
+        String m1;
+        if (h < 10) {
+            h1 = "0" + String.valueOf(h);
+        } else {
+            h1 = String.valueOf(h);
+        }
+        if (m < 10) {
+            m1 = "0" + String.valueOf(m);
+        } else {
+            m1 = String.valueOf(m);
+        }
+        return h1 + ":" + m1 + "散场";
     }
 }

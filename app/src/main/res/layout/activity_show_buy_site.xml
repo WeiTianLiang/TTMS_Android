@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.wtl.ttms_hdd.DrawSiteToBuy.view.ShowBuySiteActivity">
+    android:orientation="vertical"
+    tools:context="com.example.wtl.ttms_hdd.SeatToBuy.view.ShowBuySiteActivity">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/top1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ea5353"
+        android:background="#e73f3f"
         android:fitsSystemWindows="true">
 
         <ImageView
@@ -23,11 +25,70 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="影厅名称"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textColor="#fff"
             android:gravity="center"
             android:layout_marginLeft="40dp"/>
 
     </android.support.v7.widget.Toolbar>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/top2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top1">
+
+        <TextView
+            android:id="@+id/ticketname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="寂静之地"
+            android:textColor="#000"
+            android:layout_margin="10dp"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/ticketdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6月11日"
+            android:layout_below="@+id/ticketname"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/ticketime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="22:14"
+            android:layout_toRightOf="@+id/ticketdate"
+            android:layout_below="@+id/ticketname"
+            android:layout_marginLeft="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:background="#bebebe"
+            android:layout_below="@+id/ticketime"
+            android:layout_marginTop="10dp"/>
+
+    </RelativeLayout>
+
+    <com.example.wtl.ttms_hdd.SeatToBuy.view.SeatView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top2"
+        android:layout_above="@+id/select_Prompt"/>
+
+    <TextView
+        android:id="@+id/select_Prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请先选座"
+        android:gravity="center"
+        android:padding="13dp"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:layout_alignParentBottom="true"
+        android:background="#f1d8b4"/>
+
+</RelativeLayout>

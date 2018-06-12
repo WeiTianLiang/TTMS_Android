@@ -2,6 +2,7 @@ package com.example.wtl.ttms_hdd.BuyTicket.presenter.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,15 @@ public class Data_showAdapter extends RecyclerView.Adapter<Data_showAdapter.View
                 }
             }
         });
+    }
+
+    public String getNowDate() {
+        for(int i = 0 ; i < isclick.size() ; i++) {
+            if(isclick.get(i)) {
+                return dataModelList.get(i);
+            }
+        }
+        return "";
     }
 
     @Override

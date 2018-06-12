@@ -21,7 +21,7 @@
         app:tabSelectedTextColor="#ffffff"
         app:tabTextColor="#d4d4d4"
         app:tabTextAppearance="@style/TabLayoutSize"
-        android:background="#ea5353"
+        android:background="#e73f3f"
         android:layout_below="@id/qqq"
         android:fitsSystemWindows="true"/>
 
