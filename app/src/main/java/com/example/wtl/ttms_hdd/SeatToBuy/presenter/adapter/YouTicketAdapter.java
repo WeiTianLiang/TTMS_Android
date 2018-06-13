@@ -2,6 +2,7 @@ package com.example.wtl.ttms_hdd.SeatToBuy.presenter.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.SeatToBuy.model.IsBuyTicketModel;
+import com.example.wtl.ttms_hdd.SeatToBuy.view.drawView.SeatView;
 
 import java.util.List;
 
@@ -23,10 +25,12 @@ public class YouTicketAdapter extends RecyclerView.Adapter<YouTicketAdapter.View
 
     private List<IsBuyTicketModel> modelList;
     private Context context;
+    private SeatView seats;
 
-    public YouTicketAdapter(Context context, List<IsBuyTicketModel> modelList) {
+    public YouTicketAdapter(Context context, List<IsBuyTicketModel> modelList, SeatView seats) {
         this.context = context;
         this.modelList = modelList;
+        this.seats = seats;
     }
 
     @Override
@@ -41,18 +45,6 @@ public class YouTicketAdapter extends RecyclerView.Adapter<YouTicketAdapter.View
         IsBuyTicketModel model = modelList.get(position);
         holder.locat.setText(model.getLocat());
         holder.oneprice.setText(model.getPrice());
-        holder.bigdelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removeitem(position, null);
-            }
-        });
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removeitem(position, null);
-            }
-        });
     }
 
     /**
@@ -66,7 +58,7 @@ public class YouTicketAdapter extends RecyclerView.Adapter<YouTicketAdapter.View
             return -1;
         } else if (position == -1 && locat != null) {
             for (int i = 0; i < modelList.size(); i++) {
-                if((modelList.get(i).getLocat()).equals(locat)) {
+                if ((modelList.get(i).getLocat()).equals(locat)) {
                     modelList.remove(i);
                     notifyItemRemoved(i);
                     notifyItemRangeChanged(i, modelList.size() - i);
@@ -95,15 +87,12 @@ public class YouTicketAdapter extends RecyclerView.Adapter<YouTicketAdapter.View
 
         TextView locat;
         TextView oneprice;
-        ImageView delete;
-        LinearLayout bigdelete;
 
         public ViewHolder(View itemView) {
             super(itemView);
             locat = (TextView) itemView.findViewById(R.id.locat);
             oneprice = (TextView) itemView.findViewById(R.id.oneprice);
-            delete = (ImageView) itemView.findViewById(R.id.delete);
-            bigdelete = (LinearLayout) itemView.findViewById(R.id.bigdelete);
         }
     }
+
 }

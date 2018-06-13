@@ -5,8 +5,7 @@
     android:orientation="horizontal"
     android:gravity="center"
     android:background="@drawable/buyback"
-    android:id="@+id/bigdelete"
-    android:padding="5dp">
+    android:id="@+id/bigdelete">
 
     <LinearLayout
         android:orientation="vertical"
@@ -31,14 +30,5 @@
             android:textColor="#ff943b"/>
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/wrong"
-        android:layout_marginLeft="10dp"/>
 
 </LinearLayout>

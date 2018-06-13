@@ -40,12 +40,13 @@ public class SeatView extends View {
     private final boolean DBG = false;
 
     Paint paint = new Paint();
-    Paint overviewPaint=new Paint();
+    Paint overviewPaint = new Paint();
     Paint lineNumberPaint;
     float lineNumberTxtHeight;
 
     /**
      * 设置行号 默认显示 1,2,3....数字
+     *
      * @param lineNumbers
      */
     public void setLineNumbers(ArrayList<String> lineNumbers) {
@@ -277,20 +278,22 @@ public class SeatView extends View {
      */
     private int seatHeight;
 
+    private GestureDetector gesture;
+
     public SeatView(Context context) {
         super(context);
     }
 
     public SeatView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context,attrs);
+        init(context, attrs);
     }
 
-    private void init(Context context,AttributeSet attrs){
+    private void init(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SeatTableView);
         overview_checked = typedArray.getColor(R.styleable.SeatTableView_overview_checked, Color.parseColor("#5A9E64"));
         overview_sold = typedArray.getColor(R.styleable.SeatTableView_overview_sold, Color.RED);
-        txt_color=typedArray.getColor(R.styleable.SeatTableView_txt_color,Color.WHITE);
+        txt_color = typedArray.getColor(R.styleable.SeatTableView_txt_color, Color.WHITE);
         seatCheckedResID = typedArray.getResourceId(R.styleable.SeatTableView_seat_checked, R.drawable.seat_green);
         seatSoldResID = typedArray.getResourceId(R.styleable.SeatTableView_overview_sold, R.drawable.seat_sold);
         seatAvailableResID = typedArray.getResourceId(R.styleable.SeatTableView_seat_available, R.drawable.seat_gray);
@@ -299,7 +302,7 @@ public class SeatView extends View {
 
     public SeatView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context,attrs);
+        init(context, attrs);
     }
 
 
@@ -323,14 +326,14 @@ public class SeatView extends View {
         xScale1 = scaleX;
         yScale1 = scaleY;
 
-        seatHeight= (int) (seatBitmap.getHeight()*yScale1);
-        seatWidth= (int) (seatBitmap.getWidth()*xScale1);
+        seatHeight = (int) (seatBitmap.getHeight() * yScale1);
+        seatWidth = (int) (seatBitmap.getWidth() * xScale1);
 
         checkedSeatBitmap = BitmapFactory.decodeResource(getResources(), seatCheckedResID);
         seatSoldBitmap = BitmapFactory.decodeResource(getResources(), seatSoldResID);
 
-        seatBitmapWidth = (int) (column * seatBitmap.getWidth()*xScale1 + (column - 1) * spacing);
-        seatBitmapHeight = (int) (row * seatBitmap.getHeight()*yScale1 + (row - 1) * verSpacing);
+        seatBitmapWidth = (int) (column * seatBitmap.getWidth() * xScale1 + (column - 1) * spacing);
+        seatBitmapHeight = (int) (row * seatBitmap.getHeight() * yScale1 + (row - 1) * verSpacing);
         paint.setColor(Color.RED);
         numberWidth = (int) dip2Px(20);
 
@@ -371,9 +374,9 @@ public class SeatView extends View {
         lineNumberPaintFontMetrics = lineNumberPaint.getFontMetrics();
         lineNumberPaint.setTextAlign(Paint.Align.CENTER);
 
-        if(lineNumbers==null){
-            lineNumbers=new ArrayList<>();
-        }else if(lineNumbers.size()<=0) {
+        if (lineNumbers == null) {
+            lineNumbers = new ArrayList<>();
+        } else if (lineNumbers.size() <= 0) {
             for (int i = 0; i < row; i++) {
                 lineNumbers.add((i + 1) + "");
             }
@@ -581,15 +584,15 @@ public class SeatView extends View {
         String txt = (row + 1) + "排";
         String txt1 = (column + 1) + "座";
 
-        if(seatChecker!=null){
+        if (seatChecker != null) {
             String[] strings = seatChecker.checkedSeatTxt(row, column);
-            if(strings!=null&&strings.length>0){
-                if(strings.length>=2){
-                    txt=strings[0];
-                    txt1=strings[1];
-                }else {
-                    txt=strings[0];
-                    txt1=null;
+            if (strings != null && strings.length > 0) {
+                if (strings.length >= 2) {
+                    txt = strings[0];
+                    txt1 = strings[1];
+                } else {
+                    txt = strings[0];
+                    txt1 = null;
                 }
             }
         }
@@ -607,9 +610,9 @@ public class SeatView extends View {
         float startX = left + seatWidth / 2 - txtWidth / 2;
 
         //只绘制一行文字
-        if(txt1==null){
+        if (txt1 == null) {
             canvas.drawText(txt, startX, getBaseLine(txtPaint, top, top + seatHeight), txtPaint);
-        }else {
+        } else {
             canvas.drawText(txt, startX, getBaseLine(txtPaint, top, top + center), txtPaint);
             canvas.drawText(txt1, startX, getBaseLine(txtPaint, top + center, top + center + seatHeight / 2), txtPaint);
         }
@@ -640,7 +643,7 @@ public class SeatView extends View {
 
         for (int i = 0; i < row; i++) {
 
-            float top = (i *seatHeight + i * verSpacing) * scaleY + translateY;
+            float top = (i * seatHeight + i * verSpacing) * scaleY + translateY;
             float bottom = (i * seatHeight + i * verSpacing + seatHeight) * scaleY + translateY;
             float baseline = (bottom + top - lineNumberPaintFontMetrics.bottom - lineNumberPaintFontMetrics.top) / 2;
 
@@ -741,12 +744,12 @@ public class SeatView extends View {
 
     ArrayList<Integer> selects = new ArrayList<>();
 
-    public ArrayList<String> getSelectedSeat(){
-        ArrayList<String> results=new ArrayList<>();
-        for(int i=0;i<this.row;i++){
-            for(int j=0;j<this.column;j++){
-                if(isHave(getID(i,j))>=0){
-                    results.add(i+","+j);
+    public ArrayList<String> getSelectedSeat() {
+        ArrayList<String> results = new ArrayList<>();
+        for (int i = 0; i < this.row; i++) {
+            for (int j = 0; j < this.column; j++) {
+                if (isHave(getID(i, j)) >= 0) {
+                    results.add(i + "," + j);
                 }
             }
         }
@@ -808,13 +811,6 @@ public class SeatView extends View {
     private void zoom(float zoom) {
         float z = zoom / getMatrixScaleX();
         matrix.postScale(z, z, scaleX, scaleY);
-        invalidate();
-    }
-
-    private void move(Point p) {
-        float x = p.x - getTranslateX();
-        float y = p.y - getTranslateY();
-        matrix.postTranslate(x, y);
         invalidate();
     }
 
@@ -983,11 +979,12 @@ public class SeatView extends View {
 
         /**
          * 获取选中后座位上显示的文字
+         *
          * @param row
          * @param column
-         * @return 返回2个元素的数组,第一个元素是第一行的文字,第二个元素是第二行文字,如果只返回一个元素则会绘制到座位图的中间位置
+         * @return 返回2个元素的数组, 第一个元素是第一行的文字, 第二个元素是第二行文字, 如果只返回一个元素则会绘制到座位图的中间位置
          */
-        String[] checkedSeatTxt(int row,int column);
+        String[] checkedSeatTxt(int row, int column);
 
     }
 

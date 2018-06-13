@@ -59,8 +59,8 @@ public class ShowBuySiteActivity extends AppCompatActivity implements View.OnCli
      */
     private TextView paymoney;
     /**
-    * 未选中提示
-    * */
+     * 未选中提示
+     */
     private TextView select_Prompt;
 
     @Override
@@ -83,7 +83,7 @@ public class ShowBuySiteActivity extends AppCompatActivity implements View.OnCli
         if (presenter == null) {
             presenter = new SeatToBuyPresenterCompl(this);
         }
-        presenter.getSeatNumber(seats, threaterId,chooseon,isbuy,paymoney,select_Prompt,Integer.parseInt(price));
+        presenter.getSeatNumber(goodId, seats, threaterId, chooseon, isbuy, paymoney, select_Prompt, Integer.parseInt(price));
     }
 
     private void Montior() {
@@ -99,7 +99,7 @@ public class ShowBuySiteActivity extends AppCompatActivity implements View.OnCli
 
         chooseon = (LinearLayout) findViewById(R.id.chooseon);
         isbuy = (RecyclerView) findViewById(R.id.isbuy);
-        GridLayoutManager manager = new GridLayoutManager(this,4);
+        GridLayoutManager manager = new GridLayoutManager(this, 4);
         DefaultItemAnimator animator = new DefaultItemAnimator();
         animator.setRemoveDuration(100);
         isbuy.setLayoutManager(manager);

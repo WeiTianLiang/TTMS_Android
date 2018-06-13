@@ -16,7 +16,7 @@ public interface ISeatToBuyPresenter {
     /**
      * 绘制座位
      */
-    void getSeatNumber(SeatView seats, String threaterId, LinearLayout layout,
+    void getSeatNumber(String goodId, SeatView seats, String threaterId, LinearLayout layout,
                        RecyclerView recyclerView, TextView textView, TextView select_Prompt, int price);
 
 }
