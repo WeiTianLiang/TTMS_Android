@@ -1,5 +1,6 @@
 package com.example.wtl.ttms_hdd.Film.view.mainFragment;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +58,8 @@ public class FilmShowFragment extends Fragment {
      */
     private IntentFilter filter;
 
+    private SwipeRefreshLayout refreshLayout;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,6 +67,8 @@ public class FilmShowFragment extends Fragment {
 
         HDDtoptitle = view.findViewById(R.id.HDDtoptitle);
         HDDviewpager = view.findViewById(R.id.HDDviewpager);
+        refreshLayout = view.findViewById(R.id.refreshfilm);
+        refreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
 
         fragmentList.add(new NowFilmShowFragment());
         fragmentList.add(new WillFilmShowFragment());
@@ -77,6 +83,14 @@ public class FilmShowFragment extends Fragment {
         HDDtoptitle.setupWithViewPager(HDDviewpager);
         filter = new IntentFilter("com.example.wtl.ttms_hdd.home_number");
         getContext().registerReceiver(broadcastReceiver, filter);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshFilmDate();
+            }
+        });
+
         return view;
     }
 
@@ -104,5 +118,28 @@ public class FilmShowFragment extends Fragment {
     public void onDestroyView() {
         getContext().unregisterReceiver(broadcastReceiver);
         super.onDestroyView();
+    }
+
+    private void refreshFilmDate() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ((Activity) getContext()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (presenter == null) {
+                            presenter = new FilmResenterCompl(getContext());
+                        }
+                        presenter.setHDDPagerAdapter(HDDviewpager, getFragmentManager(), fragmentList, stringList);
+                        refreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
     }
 }

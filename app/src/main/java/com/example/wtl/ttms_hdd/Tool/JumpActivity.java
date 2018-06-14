@@ -14,11 +14,12 @@ import com.example.wtl.ttms_hdd.R;
 
 public class JumpActivity {
 
-    public static void JumpActivity(Context context,Class clss,String name,int Id,String longtime) {
+    public static void JumpActivity(Context context, Class clss, String name, int Id, String longtime, String imagePath) {
         Intent intent = new Intent(context, clss);
-        intent.putExtra("name",name);
-        intent.putExtra("Id",String.valueOf(Id));
-        intent.putExtra("time",longtime);
+        intent.putExtra("name", name);
+        intent.putExtra("Id", String.valueOf(Id));
+        intent.putExtra("time", longtime);
+        intent.putExtra("image", imagePath);
         context.startActivity(intent);
         ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
     }

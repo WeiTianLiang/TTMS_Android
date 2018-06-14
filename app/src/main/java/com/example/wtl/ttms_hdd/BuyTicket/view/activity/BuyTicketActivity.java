@@ -1,5 +1,6 @@
 package com.example.wtl.ttms_hdd.BuyTicket.view.activity;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,29 +65,44 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
     * 展示计划
     * */
     private RecyclerView show_plan;
+    /**
+    * 下拉刷新
+    * */
+    private SwipeRefreshLayout planrefresh;
 
     private String Id;
     private String time;
+    private String image;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_ticket);
         HideScreenTop.HideScreenTop(getWindow());
-        String name = getIntent().getStringExtra("name");
+        name = getIntent().getStringExtra("name");
         Id = getIntent().getStringExtra("Id");
         time = getIntent().getStringExtra("time");
+        image = getIntent().getStringExtra("image");
         Montior();
         if(presenter == null) {
             presenter = new BuyTicketPresentCompl(this);
         }
-        presenter.showDetail(name,ticket_img,buy_name,buy_type,buy_durtion,text_details,showback);
+        presenter.showDetail(image,name,buy_name,buy_type,buy_durtion,text_details);
+        planrefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                planrefreshdate();
+            }
+        });
     }
 
     private void Montior() {
+        planrefresh = (SwipeRefreshLayout) findViewById(R.id.planrefresh);
+        planrefresh.setColorSchemeResources(android.R.color.holo_red_light);
         ticket_img = (ImageView) findViewById(R.id.ticket_img);
         Glide.with(this)
-                .load("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=178339431,3551923999&fm=27&gp=0.jpg")
+                .load(image)
                 .into(ticket_img);
         buy_name = (TextView) findViewById(R.id.buy_name);
         buy_type = (TextView) findViewById(R.id.buy_type);
@@ -94,6 +110,9 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
         buyback = (ImageView) findViewById(R.id.buyback);
         text_details = (TextView) findViewById(R.id.text_details);
         showback = (ImageView) findViewById(R.id.showback);
+        Glide.with(this)
+                .load(image)
+                .into(showback);
         top = (RelativeLayout) findViewById(R.id.top);
         data_show = (RecyclerView) findViewById(R.id.data_show);
         show_plan = (RecyclerView) findViewById(R.id.show_plan);
@@ -130,5 +149,29 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
         finish();
         overridePendingTransition(R.anim.activity_right_out, R.anim.activity_right_in);
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void planrefreshdate() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(presenter == null) {
+                            presenter = new BuyTicketPresentCompl(BuyTicketActivity.this);
+                        }
+                        presenter.showPlanText(data_show,show_plan,Integer.parseInt(Id),time);
+                        presenter.showDetail(image,name,buy_name,buy_type,buy_durtion,text_details);
+                        planrefresh.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
     }
 }

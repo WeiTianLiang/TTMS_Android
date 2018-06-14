@@ -47,6 +47,10 @@ public class YouTicketAdapter extends RecyclerView.Adapter<YouTicketAdapter.View
         holder.oneprice.setText(model.getPrice());
     }
 
+
+    public List<IsBuyTicketModel> getDate() {
+        return modelList;
+    }
     /**
      * 删除
      */

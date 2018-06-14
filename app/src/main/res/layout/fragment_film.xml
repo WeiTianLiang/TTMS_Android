@@ -1,47 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/refreshfilm">
 
-    <View
-        android:id="@+id/qqq"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:background="#ea5353"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/HDDtoptitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabIndicatorHeight="2dp"
-        app:tabGravity="center"
-        app:tabIndicatorColor="#ffffff"
-        app:tabSelectedTextColor="#ffffff"
-        app:tabTextColor="#d4d4d4"
-        app:tabTextAppearance="@style/TabLayoutSize"
-        android:background="#e73f3f"
-        android:layout_below="@id/qqq"
-        android:fitsSystemWindows="true"/>
+        <View
+            android:id="@+id/qqq"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="#ea5353" />
 
-    <View
-        android:id="@+id/huafen"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#a7a7a7"
-        android:layout_below="@+id/HDDtoptitle"/>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/HDDtoptitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/qqq"
+            android:background="#e73f3f"
+            android:fitsSystemWindows="true"
+            app:tabGravity="center"
+            app:tabIndicatorColor="#ffffff"
+            app:tabIndicatorHeight="2dp"
+            app:tabSelectedTextColor="#ffffff"
+            app:tabTextAppearance="@style/TabLayoutSize"
+            app:tabTextColor="#d4d4d4" />
 
-    <FrameLayout
-        android:id="@+id/framelayout_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/huafen"/>
+        <View
+            android:id="@+id/huafen"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/HDDtoptitle"
+            android:background="#a7a7a7" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/HDDviewpager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/framelayout_card"/>
+        <FrameLayout
+            android:id="@+id/framelayout_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/huafen" />
 
-</RelativeLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/HDDviewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/framelayout_card" />
+
+    </RelativeLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

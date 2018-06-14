@@ -62,18 +62,24 @@ public class ShowBuySiteActivity extends AppCompatActivity implements View.OnCli
      * 未选中提示
      */
     private TextView select_Prompt;
+    private String goodId;
+    private String name;
+    private String startime;
+    private String date;
+    private String threatname;
+    private String threaterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_buy_site);
         HideScreenTop.HideScreenTop(getWindow());
-        String name = getIntent().getStringExtra("name");
-        String startime = getIntent().getStringExtra("startime");
-        String date = getIntent().getStringExtra("date");
-        String threatname = getIntent().getStringExtra("threat_name");
-        String goodId = getIntent().getStringExtra("goodId");
-        String threaterId = getIntent().getStringExtra("threaterId");
+        name = getIntent().getStringExtra("name");
+        startime = getIntent().getStringExtra("startime");
+        date = getIntent().getStringExtra("date");
+        threatname = getIntent().getStringExtra("threat_name");
+        goodId = getIntent().getStringExtra("goodId");
+        threaterId = getIntent().getStringExtra("threaterId");
         String price = getIntent().getStringExtra("price");
         Montior();
         ticketname.setText(name);
@@ -83,7 +89,7 @@ public class ShowBuySiteActivity extends AppCompatActivity implements View.OnCli
         if (presenter == null) {
             presenter = new SeatToBuyPresenterCompl(this);
         }
-        presenter.getSeatNumber(goodId, seats, threaterId, chooseon, isbuy, paymoney, select_Prompt, Integer.parseInt(price));
+        presenter.getSeatNumber(Integer.parseInt(goodId),seats, threaterId, chooseon, isbuy, paymoney, select_Prompt, Integer.parseInt(price));
     }
 
     private void Montior() {
@@ -107,6 +113,7 @@ public class ShowBuySiteActivity extends AppCompatActivity implements View.OnCli
         paymoney = (TextView) findViewById(R.id.paymoney);
 
         siteback.setOnClickListener(this);
+        paymoney.setOnClickListener(this);
     }
 
     @Override
@@ -115,6 +122,12 @@ public class ShowBuySiteActivity extends AppCompatActivity implements View.OnCli
             case R.id.siteback:
                 finish();
                 overridePendingTransition(R.anim.activity_right_out, R.anim.activity_right_in);
+                break;
+            case R.id.paymoney:
+                if (presenter == null) {
+                    presenter = new SeatToBuyPresenterCompl(this);
+                }
+                presenter.IsCheck(isbuy,goodId,name,date,threatname,startime);
                 break;
         }
     }

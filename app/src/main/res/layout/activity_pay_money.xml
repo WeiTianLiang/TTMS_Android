@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.wtl.ttms_hdd.PayMoney.view.PayMoneyActivity"
+    android:background="#78cfe7"
+    android:fitsSystemWindows="true">
+
+    <ImageView
+        android:id="@+id/payback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/buyback"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/lastimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="18sp"
+        android:textColor="#fff"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/payname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="主逻辑公园"
+            android:textColor="#fff"
+            android:textSize="24sp"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6月15日"
+                android:textSize="20sp"
+                android:textColor="#fff"/>
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textSize="20sp"
+                android:textColor="#fff"
+                android:layout_marginLeft="15dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/threate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="超级剧目厅"
+            android:textSize="20sp"
+            android:textColor="#fff"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/seat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注意:票一旦购买,不可退还,不可修改,购票最终解释权在本影院"
+            android:layout_marginLeft="15dp"
+            android:padding="5dp"
+            android:textSize="16sp"
+            android:textColor="#ff0000"/>
+
+        <TextView
+            android:id="@+id/paymoney1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:text="提交订单"
+            android:background="@drawable/paymoney"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

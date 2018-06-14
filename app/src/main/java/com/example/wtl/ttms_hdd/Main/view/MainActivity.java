@@ -16,6 +16,7 @@ import com.example.wtl.ttms_hdd.Film.view.mainFragment.FilmShowFragment;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.TheHome.view.HomeFragment;
 import com.example.wtl.ttms_hdd.Tool.HideScreenTop;
+import com.example.wtl.ttms_hdd.User.view.User_Fragment;
 import com.gyf.barlibrary.ImmersionBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,9 +31,17 @@ public class MainActivity extends AppCompatActivity {
      */
     private HomeFragment homeFragment;
     /**
+    * 个人中心碎片
+    * */
+    private User_Fragment user_fragment;
+    /**
      * 接受广播
      */
     private IntentFilter filter;
+    /**
+    * 结束登陆广播
+    * */
+    private IntentFilter overfilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 .setActiveColor(R.color.changeclick)//选中时的颜色
                 .addItem(new BottomNavigationItem(R.mipmap.home, "首页"))
                 .addItem(new BottomNavigationItem(R.mipmap.movie, "影片"))
-                .addItem(new BottomNavigationItem(R.mipmap.hallitem, "影厅"))
                 .addItem(new BottomNavigationItem(R.mipmap.my, "我的"))
                 .setFirstSelectedPosition(0)
                 .initialise();
@@ -59,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         firstSelect();
         filter = new IntentFilter("com.example.wtl.ttms_hdd.home_number");
         registerReceiver(broadcastReceiver,filter);
+        overfilter = new IntentFilter("com.example.wtl.ttms_hdd.User.outlogin");
+        registerReceiver(broadcastReceiver1,overfilter);
     }
 
     /**
@@ -99,8 +109,11 @@ public class MainActivity extends AppCompatActivity {
                         transaction.show(showFragment);
                         break;
                     case 2:
-                        break;
-                    case 3:
+                        if (user_fragment == null) {
+                            user_fragment = new User_Fragment();
+                            transaction.add(R.id.add_fragment, user_fragment);
+                        }
+                        transaction.show(user_fragment);
                         break;
                 }
                 transaction.commit();
@@ -125,6 +138,9 @@ public class MainActivity extends AppCompatActivity {
         if (homeFragment != null) {
             transaction.hide(homeFragment);
         }
+        if (user_fragment != null) {
+            transaction.hide(user_fragment);
+        }
     }
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -142,6 +158,13 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Log.e("错误：","失败。。。。。。。。。。。");
             }
+        }
+    };
+
+    BroadcastReceiver broadcastReceiver1 = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            MainActivity.this.finish();
         }
     };
 

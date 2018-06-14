@@ -16,9 +16,14 @@ import java.util.List;
 public interface IFilmPresenter {
 
     /**
-     * recyclerview适配器
+     * 正在上映适配器
      */
-    void setFilmSellAdapter(RecyclerView recyclerView, Context context);
+    void setFilmSellAdapter(RecyclerView recyclerView);
+
+    /**
+     * 即将上映适配器
+     */
+    void setWillFilmSellAdapter(RecyclerView recyclerView);
 
     /**
      * fragment分页适配器

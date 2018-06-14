@@ -3,6 +3,7 @@ package com.example.wtl.ttms_hdd.Login.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.wtl.ttms_hdd.Login.model.UserIdMOdel;
 import com.example.wtl.ttms_hdd.Main.view.MainActivity;
 import com.example.wtl.ttms_hdd.NetTool.ResultModel;
 import com.example.wtl.ttms_hdd.Login.model.ValidateModel;
@@ -48,10 +50,9 @@ public class LoginPresenterCompl implements ILoginPresenter {
      * 获取服务器发来的请求头
      */
     private String sessionId = null;
-    private String sessionId2 = null;
 
     @Override
-    public void doLogin(String account, String password, String verCode) {
+    public void doLogin(final String account, String password, String verCode) {
         if (account.equals("") || password.equals("") || verCode.equals("")) {
             Toast.makeText(context, "登陆失败!账号/密码/验证码错误!", Toast.LENGTH_SHORT).show();
         } else {
@@ -78,17 +79,9 @@ public class LoginPresenterCompl implements ILoginPresenter {
                 @Override
                 public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
                     if (response.isSuccessful()) {
-                        Log.e("asdasdsa",response.body().getResult()+"");
-                        Log.e("asdasdsa",response.body().getMsg());
                         if (response.body() != null) {
-                            sessionId2 = response.headers().toString();
-                            if(sessionId2 == null) {
-                                Log.e("asdasdasdasd","kong");
-                            } else {
-                                Log.e("asdasdasdasd",response.headers().toString());
-                            }
-//                            FileOperate.writeFile(sessionId2,context);
                             if (response.body().getResult() == 200) {
+                                getUserId(account);
                                 Intent intent = new Intent(context, MainActivity.class);
                                 context.startActivity(intent);
                                 ((Activity) context).finish();
@@ -150,6 +143,35 @@ public class LoginPresenterCompl implements ILoginPresenter {
 
             @Override
             public void onFailure(Call<ValidateModel> call, Throwable t) {
+                Log.e("onFailure", t.getMessage() + "失败");
+            }
+        });
+    }
+
+    private void getUserId(String acc) {
+        GetLogin_Interface request = CreateRetrofit.requestRetrofit(sessionId).create(GetLogin_Interface.class);
+        Call<UserIdMOdel> call = request.getUserId(acc);
+        call.enqueue(new Callback<UserIdMOdel>() {
+            @Override
+            public void onResponse(Call<UserIdMOdel> call, Response<UserIdMOdel> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        if(response.body().getResult() == 200) {
+                            int userId = response.body().getData().getUserId();
+                            SharedPreferences.Editor editor = context.getSharedPreferences("userId",Context.MODE_PRIVATE).edit();
+                            editor.putString("userId",String.valueOf(userId));
+                            editor.apply();
+                        }
+                    } else {
+                        Toast.makeText(context, "登陆失败!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, "登陆失败!!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserIdMOdel> call, Throwable t) {
                 Log.e("onFailure", t.getMessage() + "失败");
             }
         });

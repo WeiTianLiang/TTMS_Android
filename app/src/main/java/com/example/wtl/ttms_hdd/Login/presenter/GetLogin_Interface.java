@@ -1,5 +1,6 @@
 package com.example.wtl.ttms_hdd.Login.presenter;
 
+import com.example.wtl.ttms_hdd.Login.model.UserIdMOdel;
 import com.example.wtl.ttms_hdd.NetTool.ResultModel;
 import com.example.wtl.ttms_hdd.Login.model.ValidateModel;
 
@@ -8,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * 登陆注解接口
@@ -21,5 +23,8 @@ public interface GetLogin_Interface {
 
     @POST("/User/Login")
     Call<ResultModel> postUser(@Body RequestBody body);
+
+    @GET("/User/QueryUserByAccount/{acc}")
+    Call<UserIdMOdel> getUserId(@Path("acc") String acc);
 
 }

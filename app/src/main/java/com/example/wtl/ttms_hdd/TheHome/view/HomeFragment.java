@@ -1,10 +1,12 @@
 package com.example.wtl.ttms_hdd.TheHome.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,9 +15,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.wtl.ttms_hdd.R;
+import com.example.wtl.ttms_hdd.TheHome.model.HotSowModel;
 import com.example.wtl.ttms_hdd.TheHome.presenter.ITheHomePresenter;
 import com.example.wtl.ttms_hdd.TheHome.presenter.TheHomePresenterCompl;
+import com.example.wtl.ttms_hdd.TheHome.presenter.adapter.HotShowAdapter;
 import com.youth.banner.Banner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 主页fragment
@@ -45,6 +52,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     * */
     private Intent intent;
 
+    private SwipeRefreshLayout refresh;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,10 +62,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         if(presenter == null) {
            presenter = new TheHomePresenterCompl(getContext());
         }
-        presenter.loadImage(broadcast);
-        presenter.setHotAdapter(nowhot_show);
-        presenter.setWillAdapter(will_show);
+        presenter.setHotAdapter(nowhot_show,show_number,broadcast);
+        presenter.setWillAdapter(will_show,will_number);
         intent = new Intent("com.example.wtl.ttms_hdd.home_number");
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshDate();
+            }
+        });
         return view;
     }
 
@@ -66,6 +80,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         will_show = view.findViewById(R.id.will_show);
         show_number = view.findViewById(R.id.show_number);
         will_number = view.findViewById(R.id.will_number);
+        refresh = view.findViewById(R.id.refresh);
+        refresh.setColorSchemeResources(android.R.color.holo_red_light);
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -91,5 +107,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 getContext().sendBroadcast(intent);
                 break;
         }
+    }
+
+    private void refreshDate() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ((Activity) getContext()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(presenter == null) {
+                            presenter = new TheHomePresenterCompl(getContext());
+                        }
+                        presenter.setHotAdapter(nowhot_show,show_number,broadcast);
+                        presenter.setWillAdapter(will_show,will_number);
+                        refresh.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
     }
 }

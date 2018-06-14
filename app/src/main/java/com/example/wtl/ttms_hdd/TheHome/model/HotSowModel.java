@@ -10,23 +10,29 @@ import java.util.List;
 public class HotSowModel {
 
     private int result;
+    private String msg;
     private List<data> data;
 
-    public class data {
+    public static class data {
         private int programmeId;
         private String programmeName;
-        private String programmeDruation;
+        private String duration;
+        private String programmeImagePath;
 
         public String getProgrammeName() {
-            return programmeName;
+            return programmeImagePath;
         }
 
         public int getProgrammeId() {
             return programmeId;
         }
 
-        public String getProgrammeDruation() {
-            return programmeDruation;
+        public String getDuration() {
+            return duration;
+        }
+
+        public String getProgrammeImagePath() {
+            return programmeName;
         }
     }
 
@@ -36,5 +42,9 @@ public class HotSowModel {
 
     public List<HotSowModel.data> getData() {
         return data;
+    }
+
+    public String getMsg() {
+        return msg;
     }
 }

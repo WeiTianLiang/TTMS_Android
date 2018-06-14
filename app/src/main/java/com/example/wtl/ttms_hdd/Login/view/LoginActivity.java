@@ -1,7 +1,5 @@
 package com.example.wtl.ttms_hdd.Login.view;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +7,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.wtl.ttms_hdd.ChangePassword.view.ChangePassActivity;
 import com.example.wtl.ttms_hdd.Login.presenter.ILoginPresenter;
 import com.example.wtl.ttms_hdd.Login.presenter.LoginPresenterCompl;
-import com.example.wtl.ttms_hdd.Main.view.MainActivity;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.Tool.ClearEditText;
 import com.example.wtl.ttms_hdd.Tool.HideScreenTop;
@@ -121,9 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 /*
                 * 处理忘记密码
                 * */
-                Intent intent = new Intent(LoginActivity.this, ChangePassActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
+                Toast.makeText(this,"请联系李佳伟:13429850372",Toast.LENGTH_LONG).show();
                 break;
             case R.id.toregister:
                 /*

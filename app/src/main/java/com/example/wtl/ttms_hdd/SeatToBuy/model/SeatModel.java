@@ -14,13 +14,11 @@ public class SeatModel {
     private List<data> data;
 
     public class data {
-        private int seatId;
-        private int theaterId;
-        private boolean status;
+        private int status;
         private int seatRowNumber;
         private int seatColNumber;
 
-        public boolean isStatus() {
+        public int isStatus() {
             return status;
         }
 
@@ -28,16 +26,8 @@ public class SeatModel {
             return seatColNumber;
         }
 
-        public int getSeatId() {
-            return seatId;
-        }
-
         public int getSeatRowNumber() {
             return seatRowNumber;
-        }
-
-        public int getTheaterId() {
-            return theaterId;
         }
     }
 

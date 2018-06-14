@@ -1,134 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/planrefresh"
     tools:context="com.example.wtl.ttms_hdd.BuyTicket.view.activity.BuyTicketActivity">
 
-    <ImageView
-        android:id="@+id/showback"
-        android:layout_width="match_parent"
-        android:layout_height="255dp"
-        android:scaleType="fitXY"/>
-
     <RelativeLayout
-        android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="255dp"
-        android:background="#262c3b"
-        android:padding="5dp"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/buyback"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="8dp"
-            android:src="@mipmap/buyback"
-            android:layout_marginTop="5dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="13dp"
-            android:text="详情"
-            android:textSize="17dp"
-            android:textColor="#efefef"/>
-
-        <ImageView
-            android:id="@+id/ticket_img"
-            android:layout_width="120dp"
-            android:layout_height="170dp"
-            android:layout_below="@+id/buyback"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
+            android:id="@+id/showback"
+            android:layout_width="match_parent"
+            android:layout_height="255dp"
             android:scaleType="fitXY" />
 
-        <LinearLayout
-            android:id="@+id/film_details"
+        <RelativeLayout
+            android:id="@+id/top"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:layout_below="@+id/buyback"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_toRightOf="@+id/ticket_img"
-            android:orientation="vertical">
+            android:layout_height="255dp"
+            android:background="#262c3b"
+            android:fitsSystemWindows="true"
+            android:padding="5dp">
 
-            <TextView
-                android:id="@+id/buy_name"
+            <ImageView
+                android:id="@+id/buyback"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="超时空同居"
-                android:textColor="#fff"
-                android:textSize="20sp" />
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:padding="8dp"
+                android:src="@mipmap/buyback" />
 
             <TextView
-                android:id="@+id/buy_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="戏剧,爱情,恐怖,非主流"
-                android:textColor="#c9c9c9"
-                android:textSize="14sp" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                android:text="详情"
+                android:textColor="#efefef"
+                android:textSize="17dp" />
 
-            <TextView
-                android:id="@+id/buy_durtion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="100"
-                android:textColor="#c9c9c9"
-                android:textSize="14sp" />
+            <ImageView
+                android:id="@+id/ticket_img"
+                android:layout_width="120dp"
+                android:layout_height="170dp"
+                android:layout_below="@+id/buyback"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:scaleType="fitXY" />
 
-            <TextView
-                android:id="@+id/buy_actors"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="李佳伟 苍井空"
-                android:textColor="#c9c9c9"
-                android:textSize="14sp" />
+            <LinearLayout
+                android:id="@+id/film_details"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_below="@+id/buyback"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/ticket_img"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/buy_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="超时空同居"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/buy_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="戏剧,爱情,恐怖,非主流"
+                    android:textColor="#c9c9c9"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/buy_durtion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="100"
+                    android:textColor="#c9c9c9"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/buy_actors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#c9c9c9"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/text_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/top"
+            android:background="#ffff"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/data_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_details"
+            android:layout_marginTop="10dp"
+            android:background="#fff" />
+
+        <View
+            android:id="@+id/divide"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/data_show"
+            android:background="#e2e2e2" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/show_plan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divide"
+            android:background="#fff" />
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/text_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffff"
-        android:layout_below="@+id/top"
-        android:padding="10dp"
-        android:textColor="#000"
-        android:textSize="15sp"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/data_show"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:layout_below="@id/text_details"
-        android:layout_marginTop="10dp"/>
-
-    <View
-        android:id="@+id/divide"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#e2e2e2"
-        android:layout_below="@id/data_show"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/show_plan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:layout_below="@+id/divide"/>
-
-</RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

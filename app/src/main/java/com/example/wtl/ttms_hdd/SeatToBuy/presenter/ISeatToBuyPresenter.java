@@ -16,7 +16,12 @@ public interface ISeatToBuyPresenter {
     /**
      * 绘制座位
      */
-    void getSeatNumber(String goodId, SeatView seats, String threaterId, LinearLayout layout,
+    void getSeatNumber(int goodId,SeatView seats, String threaterId, LinearLayout layout,
                        RecyclerView recyclerView, TextView textView, TextView select_Prompt, int price);
+
+    /**
+    * 确认选中
+    * */
+    void IsCheck(RecyclerView recyclerView,String goodId,String name,String data,String threatename,String time);
 
 }

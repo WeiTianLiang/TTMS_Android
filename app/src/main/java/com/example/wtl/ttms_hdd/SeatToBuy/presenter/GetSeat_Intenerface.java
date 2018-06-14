@@ -1,5 +1,6 @@
 package com.example.wtl.ttms_hdd.SeatToBuy.presenter;
 
+import com.example.wtl.ttms_hdd.NetTool.ResultModel;
 import com.example.wtl.ttms_hdd.SeatToBuy.model.GetTicketModel;
 import com.example.wtl.ttms_hdd.SeatToBuy.model.SeatModel;
 
@@ -17,10 +18,10 @@ import retrofit2.http.Path;
 
 public interface GetSeat_Intenerface {
 
-    @GET("/Seat/SelectSeat/{theaterId}")
-    Call<SeatModel> getSeatDate(@Path("theaterId") int theaterId);
-
     @GET("/Ticket/SelectTicket/{goodId}")
     Call<GetTicketModel> getTicketMessage(@Path("goodId") int gooId);
+
+    @POST("/Ticket/NewSellTicket/{ticketId}&{userId}")
+    Call<ResultModel> postTicket(@Path("ticketId") int ticketid,@Path("userId") int userid);
 
 }

@@ -25,6 +25,9 @@ import com.example.wtl.ttms_hdd.Tool.FileOperate;
 import com.example.wtl.ttms_hdd.Tool.PackageGson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +57,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
 
     private List<String> models1;
 
-    private List<PlanAll> planAlls = new ArrayList<>();
+    private List<PlanAll> planAlls;
 
     private GetFilmDetial_Inference request;
 
@@ -65,7 +68,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
     private int price;
 
     @Override
-    public void showDetail(String name, final ImageView ticket_img, final TextView buy_name, final TextView buy_type, final TextView buy_durtion, final TextView text_details, final ImageView showback) {
+    public void showDetail(final String image, String name, final TextView buy_name, final TextView buy_type, final TextView buy_durtion, final TextView text_details) {
         this.name = name;
         request = CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetFilmDetial_Inference.class);
         Call<FilmdetailModel> call = request.getFilmDetail(name);
@@ -78,16 +81,10 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                             ((Activity) context).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Glide.with(context)
-                                            .load("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=178339431,3551923999&fm=27&gp=0.jpg")
-                                            .into(ticket_img);
                                     buy_name.setText(response.body().getData().getProgrammeName());
                                     buy_type.setText(response.body().getData().getProgrammeTags());
                                     buy_durtion.setText(String.valueOf(response.body().getData().getProgrammeDruation()));
                                     text_details.setText(response.body().getData().getProgrammeProfile());
-                                    Glide.with(context)
-                                            .load("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=178339431,3551923999&fm=27&gp=0.jpg")
-                                            .into(showback);
                                 }
                             });
                         } else {
@@ -122,6 +119,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         models1 = new ArrayList<>();
+                        planAlls = new ArrayList<>();
                         for (int i = 0; i < response.body().getData().size(); i++) {
                             String performance = response.body().getData().get(i).getPerformance();
                             price = response.body().getData().get(i).getPrice();
@@ -129,12 +127,27 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                             String theaterName = response.body().getData().get(i).getTheaterName();
                             int goodId = response.body().getData().get(i).getGoodId();
                             int threaterId = response.body().getData().get(i).getTheaterId();
-
-                            models1.add(getDate(playDate));
+                            if (models1.size() == 0) {
+                                models1.add(getDate(playDate));
+                            } else {
+                                int k = 0;
+                                for (int j = 0; j < models1.size(); j++) {
+                                    if ((models1.get(j)).equals(getDate(playDate))) {
+                                        k = 0;
+                                        break;
+                                    } else {
+                                        k = 1;
+                                    }
+                                }
+                                if(k == 1) {
+                                    models1.add(getDate(playDate));
+                                }
+                            }
                             PlanAll planAll = new PlanAll(goodId, threaterId, getDate(playDate), changetime(performance, 0), changetime(performance, 1),
                                     theaterName, String.valueOf(price));
                             planAlls.add(planAll);
                         }
+                        Collections.sort(models1);
                         for (int i = 0; i < models1.size(); i++) {
                             List<PlanModel> planModels1 = new ArrayList<>();
                             for (int j = 0; j < planAlls.size(); j++) {
@@ -171,7 +184,7 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                                         intent.putExtra("threat_name", threat_name);
                                         intent.putExtra("threaterId", String.valueOf(threaterId));
                                         intent.putExtra("goodId", String.valueOf(goodId));
-                                        intent.putExtra("price",String.valueOf(price));
+                                        intent.putExtra("price", String.valueOf(price));
                                         context.startActivity(intent);
                                         ((Activity) context).overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out);
                                     }
@@ -209,57 +222,71 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
                 if (c == 0) {
                     return "06:30";
                 } else {
-                    int h = Integer.parseInt(time) / 60;
-                    int m = Integer.parseInt(time) - h * 60;
-                    return addtime("06:30", h, m);
+                    if (time != null) {
+                        int h = Integer.parseInt(time) / 60;
+                        int m = Integer.parseInt(time) - h * 60;
+                        return addtime("06:30", h, m);
+                    }
                 }
             case "早二":
                 if (c == 0) {
                     return "09:30";
                 } else {
-                    int h = Integer.parseInt(time) / 60;
-                    int m = Integer.parseInt(time) - h * 60;
-                    return addtime("09:30", h, m);
+                    if (time != null) {
+                        int h = Integer.parseInt(time) / 60;
+                        int m = Integer.parseInt(time) - h * 60;
+                        return addtime("09:30", h, m);
+                    }
                 }
             case "午一":
                 if (c == 0) {
                     return "13:00";
                 } else {
-                    int h = Integer.parseInt(time) / 60;
-                    int m = Integer.parseInt(time) - h * 60;
-                    return addtime("13:30", h, m);
+                    if (time != null) {
+                        int h = Integer.parseInt(time) / 60;
+                        int m = Integer.parseInt(time) - h * 60;
+                        return addtime("13:30", h, m);
+                    }
                 }
             case "午二":
                 if (c == 0) {
                     return "16:00";
                 } else {
-                    int h = Integer.parseInt(time) / 60;
-                    int m = Integer.parseInt(time) - h * 60;
-                    return addtime("16:30", h, m);
+                    if (time != null) {
+                        int h = Integer.parseInt(time) / 60;
+                        int m = Integer.parseInt(time) - h * 60;
+                        return addtime("16:30", h, m);
+                    }
                 }
             case "晚一":
                 if (c == 0) {
                     return "19:00";
                 } else {
-                    int h = Integer.parseInt(time) / 60;
-                    int m = Integer.parseInt(time) - h * 60;
-                    return addtime("19:30", h, m);
+                    if (time != null) {
+                        int h = Integer.parseInt(time) / 60;
+                        int m = Integer.parseInt(time) - h * 60;
+                        return addtime("19:30", h, m);
+                    }
                 }
             case "晚二":
                 if (c == 0) {
                     return "22:00";
                 } else {
-                    int h = Integer.parseInt(time) / 60;
-                    int m = Integer.parseInt(time) - h * 60;
-                    return addtime("22:30", h, m);
+                    if (time != null) {
+                        int h = Integer.parseInt(time) / 60;
+                        int m = Integer.parseInt(time) - h * 60;
+                        return addtime("22:30", h, m);
+                    }
                 }
             case "午夜":
                 if (c == 0) {
                     return "01:00";
                 } else {
-                    int h = Integer.parseInt(time) / 60;
-                    int m = Integer.parseInt(time) - h * 60;
-                    return addtime("01:30", h, m);
+                    if (time != null) {
+                        int h = Integer.parseInt(time) / 60;
+                        int m = Integer.parseInt(time) - h * 60;
+                        return addtime("01:30", h, m);
+                    }
                 }
             default:
                 break;
@@ -287,4 +314,5 @@ public class BuyTicketPresentCompl implements IBuyTicketPresenter {
         }
         return h1 + ":" + m1 + "散场";
     }
+
 }

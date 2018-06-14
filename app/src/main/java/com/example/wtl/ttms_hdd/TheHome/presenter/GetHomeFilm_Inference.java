@@ -2,8 +2,11 @@ package com.example.wtl.ttms_hdd.TheHome.presenter;
 
 import com.example.wtl.ttms_hdd.TheHome.model.HotSowModel;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 /**
  * 接收数据
@@ -12,10 +15,7 @@ import retrofit2.http.GET;
 
 public interface GetHomeFilm_Inference {
 
-    @GET("/Programme")
-    Call<HotSowModel> getHotShow();
-
-    @GET("/Programme")
-    Call<HotSowModel> getWillShow();
+    @POST("/Good/SelectGoodWithName")
+    Call<HotSowModel> getFilmMess(@Body RequestBody body);
 
 }

@@ -1,10 +1,7 @@
 package com.example.wtl.ttms_hdd.TheHome.presenter.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.wtl.ttms_hdd.BuyTicket.view.activity.BuyTicketActivity;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.TheHome.model.HotSowModel;
@@ -29,7 +27,7 @@ public class HotShowAdapter extends RecyclerView.Adapter<HotShowAdapter.ViewHold
     private List<HotSowModel.data> hotSowModels;
     private Context context;
 
-    public HotShowAdapter(Context context,List<HotSowModel.data> hotSowModels) {
+    public HotShowAdapter(Context context, List<HotSowModel.data> hotSowModels) {
         this.context = context;
         this.hotSowModels = hotSowModels;
     }
@@ -44,15 +42,16 @@ public class HotShowAdapter extends RecyclerView.Adapter<HotShowAdapter.ViewHold
     @Override
     public void onBindViewHolder(final HotShowAdapter.ViewHolder holder, int position) {
         final HotSowModel.data hotSowModel = hotSowModels.get(position);
-        holder.willshow_image.setImageResource(R.drawable.ceshi);
+        final String img = "http://123.206.82.241:8090/" + hotSowModel.getProgrammeImagePath();
+        Glide.with(context).load(img).into(holder.willshow_image);
         holder.willshow_name.setText(hotSowModel.getProgrammeName());
         holder.programmeId = hotSowModel.getProgrammeId();
-        holder.programmeDruation = hotSowModel.getProgrammeDruation();
+        holder.programmeDruation = hotSowModel.getDuration();
         holder.now_show_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpActivity.JumpActivity(context,BuyTicketActivity.class,hotSowModel.getProgrammeName()
-                        ,holder.programmeId,holder.programmeDruation);
+                JumpActivity.JumpActivity(context, BuyTicketActivity.class, hotSowModel.getProgrammeName()
+                        , holder.programmeId, holder.programmeDruation, img);
             }
         });
     }

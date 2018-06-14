@@ -1,56 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginback"
+    android:background="#ff4b4b"
     android:fitsSystemWindows="true"
-    tools:context="com.example.wtl.ttms_hdd.ChangePassword.view.ChangePassActivity">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize">
-
-        <ImageView
-            android:id="@+id/register_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/reback"
-            android:padding="10dp"
-            android:layout_gravity="center_vertical"/>
-
-    </FrameLayout>
+    tools:context="com.example.wtl.ttms_hdd.User.view.activity.ChangePassActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:padding="10dp">
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical">
 
-        <include
-            android:id="@+id/input_layout"
+        <LinearLayout
+            android:id="@+id/top34"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/changepasstext"/>
+            android:background="#ff4b4b">
+
+            <ImageView
+                android:id="@+id/changeback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:src="@mipmap/buyback" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_centerVertical="true">
+
+            <EditText
+                android:id="@+id/oldpass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/editback"
+                android:hint="原密码"
+                android:padding="13dp" />
+
+            <EditText
+                android:id="@+id/newpass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/editback"
+                android:hint="新密码"
+                android:padding="13dp" />
+
+            <EditText
+                android:id="@+id/repnewpass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/editback"
+                android:hint="重复密码密码"
+                android:padding="13dp" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/main_change"
-            android:layout_width="wrap_content"
+            android:id="@+id/change"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/input_layout"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/text_bg"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/paymoney"
             android:gravity="center"
-            android:paddingBottom="8dp"
-            android:paddingLeft="22dp"
-            android:paddingRight="22dp"
-            android:paddingTop="6dp"
-            android:text="Change"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:padding="15dp"
+            android:text="确定"
+            android:textColor="#fff"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>

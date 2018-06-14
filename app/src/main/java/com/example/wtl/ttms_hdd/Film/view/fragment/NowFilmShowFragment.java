@@ -36,7 +36,7 @@ public class NowFilmShowFragment extends Fragment {
         if (presenter == null) {
             presenter = new FilmResenterCompl(getContext());
         }
-        presenter.setFilmSellAdapter(filmrecycler, getContext());
+        presenter.setFilmSellAdapter(filmrecycler);
         return view;
     }
 }

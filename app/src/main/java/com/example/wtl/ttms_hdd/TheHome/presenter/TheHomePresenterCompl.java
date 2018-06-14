@@ -2,19 +2,30 @@ package com.example.wtl.ttms_hdd.TheHome.presenter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 
+import com.example.wtl.ttms_hdd.BuyTicket.view.activity.BuyTicketActivity;
 import com.example.wtl.ttms_hdd.NetTool.CreateRetrofit;
 import com.example.wtl.ttms_hdd.TheHome.model.HotSowModel;
 import com.example.wtl.ttms_hdd.TheHome.presenter.adapter.HotShowAdapter;
 import com.example.wtl.ttms_hdd.TheHome.presenter.adapter.ImageGlideAdapter;
 import com.example.wtl.ttms_hdd.Tool.FileOperate;
+import com.example.wtl.ttms_hdd.Tool.JumpActivity;
+import com.example.wtl.ttms_hdd.Tool.PackageGson;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,58 +37,82 @@ import retrofit2.Response;
 
 public class TheHomePresenterCompl implements ITheHomePresenter {
 
-    private List<String> urlImage = new ArrayList<>();
+    private List<String> urlImage;
     private Context context;
-
-    private List<HotSowModel.data> hotSowModels = new ArrayList<>();
-    private List<HotSowModel.data> willShowModels = new ArrayList<>();
+    private List<HotSowModel.data> hotshowlist;
 
     public TheHomePresenterCompl(Context context) {
         this.context = context;
     }
 
-    @Override
-    public List<String> loadImage(Banner banner) {
+    private void loadImage(Banner banner) {
         banner.setImageLoader(new ImageGlideAdapter());
         banner.setDelayTime(4000);
-        urlImage.add("http://2t.5068.com/uploads/allimg/151027/57-15102G45306-51.jpg");
-        urlImage.add("http://pic1.5442.com/2015/0613/04/06.jpg");
-        urlImage.add("http://uploads.5068.com/allimg/1712/151-1G2010U113.jpg");
-        urlImage.add("http://pic1.win4000.com/wallpaper/8/596345446e294.jpg");
-        urlImage.add("http://pic1.5442.com/2015/0613/04/07.jpg");
         banner.setImages(urlImage);
         banner.start();
-        return null;
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                JumpActivity.JumpActivity(context, BuyTicketActivity.class, hotshowlist.get(position).getProgrammeName()
+                        , hotshowlist.get(position).getProgrammeId(), hotshowlist.get(position).getDuration(), urlImage.get(position));
+            }
+        });
     }
 
     @Override
-    public void setHotAdapter(final RecyclerView recyclerView) {
+    public void setHotAdapter(final RecyclerView recyclerView, final TextView text, final Banner banner) {
+        hotshowlist = new ArrayList<>();
+        urlImage = new ArrayList<>();
+        Map<Object, Object> map = new HashMap<>();
+        map.put("playDate", getTime());
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map));
         GetHomeFilm_Inference request = CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetHomeFilm_Inference.class);
-        Call<HotSowModel> call = request.getHotShow();
+        Call<HotSowModel> call = request.getFilmMess(body);
         call.enqueue(new Callback<HotSowModel>() {
             @Override
-            public void onResponse(Call<HotSowModel> call, final Response<HotSowModel> response) {
+            public void onResponse(Call<HotSowModel> call, Response<HotSowModel> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getResult() == 200) {
+                            int k = 0;
+                            for (HotSowModel.data data : response.body().getData()) {
+                                if (hotshowlist.size() == 0) {
+                                    hotshowlist.add(data);
+                                    urlImage.add("http://123.206.82.241:8090/" + data.getProgrammeImagePath());
+                                } else {
+                                    for (int i = 0; i < hotshowlist.size(); i++) {
+                                        if ((hotshowlist.get(i).getProgrammeName()).equals(data.getProgrammeName())) {
+                                            k = 0;
+                                            break;
+                                        } else {
+                                            k = 1;
+                                        }
+                                    }
+                                    if(k == 1) {
+                                        hotshowlist.add(data);
+                                        if (urlImage.size() <= 5) {
+                                            urlImage.add("http://123.206.82.241:8090/" + data.getProgrammeImagePath());
+                                        }
+                                    }
+                                }
+                            }
                             ((Activity) context).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    for(HotSowModel.data data:response.body().getData()) {
-                                        hotSowModels.add(data);
-                                    }
-                                    HotShowAdapter adapter = new HotShowAdapter(context,hotSowModels);
+                                    text.setText("全部"+hotshowlist.size()+"部");
+                                    HotShowAdapter adapter = new HotShowAdapter(context, hotshowlist);
                                     recyclerView.setAdapter(adapter);
+                                    loadImage(banner);
                                 }
                             });
                         } else {
-                            Log.e("onFailure", "请求格式错误或网络问题");
+                            Log.e("onFailure", response.body().getMsg());
                         }
                     } else {
-                        Log.e("onFailure", "数据不存在");
+                        Log.e("onFailure", "获取数据为空！！！");
                     }
                 } else {
-                    Log.e("onFailure", "失败");
+                    Log.e("onFailure", "获取失败！！！");
                 }
             }
 
@@ -89,33 +124,52 @@ public class TheHomePresenterCompl implements ITheHomePresenter {
     }
 
     @Override
-    public void setWillAdapter(final RecyclerView recyclerView) {
+    public void setWillAdapter(final RecyclerView recyclerView, final TextView text) {
+        final List<HotSowModel.data> willshowlist = new ArrayList<>();
         GetHomeFilm_Inference request = CreateRetrofit.requestRetrofit(FileOperate.readFile(context)).create(GetHomeFilm_Inference.class);
-        Call<HotSowModel> call = request.getWillShow();
+        Map<Object, Object> map = new HashMap<>();
+        map.put("playDate", getNextTime(1));
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), PackageGson.PacketGson(map));
+        Call<HotSowModel> call = request.getFilmMess(body);
         call.enqueue(new Callback<HotSowModel>() {
             @Override
-            public void onResponse(Call<HotSowModel> call, final Response<HotSowModel> response) {
+            public void onResponse(Call<HotSowModel> call, Response<HotSowModel> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getResult() == 200) {
+                            int k = 0;
+                            for (HotSowModel.data data : response.body().getData()) {
+                                if (willshowlist.size() == 0) {
+                                    willshowlist.add(data);
+                                } else {
+                                    for (int i = 0; i < willshowlist.size(); i++) {
+                                        if ((willshowlist.get(i).getProgrammeName()).equals(data.getProgrammeName())) {
+                                            k = 0;
+                                        } else {
+                                            k = 1;
+                                        }
+                                    }
+                                    if(k == 1) {
+                                        willshowlist.add(data);
+                                    }
+                                }
+                            }
                             ((Activity) context).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    for(HotSowModel.data data:response.body().getData()) {
-                                        willShowModels.add(data);
-                                    }
-                                    HotShowAdapter adapter = new HotShowAdapter(context,willShowModels);
+                                    text.setText("全部"+willshowlist.size()+"部");
+                                    HotShowAdapter adapter = new HotShowAdapter(context, willshowlist);
                                     recyclerView.setAdapter(adapter);
                                 }
                             });
                         } else {
-                            Log.e("onFailure", "请求格式错误或网络问题");
+                            Log.e("onFailure", response.body().getMsg());
                         }
                     } else {
-                        Log.e("onFailure", "数据不存在");
+                        Log.e("onFailure", "获取数据为空！！！");
                     }
                 } else {
-                    Log.e("onFailure", "失败");
+                    Log.e("onFailure", "获取失败！！！");
                 }
             }
 
@@ -124,5 +178,29 @@ public class TheHomePresenterCompl implements ITheHomePresenter {
                 Log.e("onFailure", t.getMessage() + "失败");
             }
         });
+    }
+
+    /**
+     * 获取当前时间
+     */
+    private String getTime() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String time = format.format(date);
+        return time;
+    }
+
+    /**
+     * 获取之后时间
+     */
+    private String getNextTime(int tc) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-M-d");
+        Date date = new Date();
+        String time = format.format(date);
+        String[] t = time.split("-");
+        int tcc = Integer.parseInt(t[2]) + tc;
+        t[2] = String.valueOf(tcc);
+        String s = t[0] + "-" + t[1] + "-" + t[2];
+        return s;
     }
 }

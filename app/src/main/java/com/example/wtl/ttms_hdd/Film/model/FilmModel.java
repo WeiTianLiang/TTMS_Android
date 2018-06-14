@@ -15,23 +15,28 @@ public class FilmModel {
     public class data {
         int programmeId;//剧目ID
         String programmeName;//剧目名称
-        String programmeDruation;//时长
+        String duration;//时长
         String programmeImagePath;//图片
+        String playDate;//上映日期
 
         public int getProgrammeId() {
             return programmeId;
         }
 
-        public String getProgrammeDruation() {
-            return programmeDruation;
+        public String getDuration() {
+            return duration;
         }
 
         public String getProgrammeName() {
-            return programmeName;
+            return programmeImagePath;
         }
 
         public String getProgrammeImagePath() {
-            return programmeImagePath;
+            return programmeName;
+        }
+
+        public String getPlayDate() {
+            return playDate;
         }
     }
 
