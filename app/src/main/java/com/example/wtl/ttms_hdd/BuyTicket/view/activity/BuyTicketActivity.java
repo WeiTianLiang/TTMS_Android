@@ -48,7 +48,7 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
     /**
     * 详情
     * */
-    private TextView text_details;
+    private TextView text_detail;
     /**
     * 背景图
     * */
@@ -88,7 +88,7 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
         if(presenter == null) {
             presenter = new BuyTicketPresentCompl(this);
         }
-        presenter.showDetail(image,name,buy_name,buy_type,buy_durtion,text_details);
+        presenter.showDetail(image,name,buy_name,buy_type,buy_durtion,text_detail);
         planrefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -108,7 +108,8 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
         buy_type = (TextView) findViewById(R.id.buy_type);
         buy_durtion = (TextView) findViewById(R.id.buy_durtion);
         buyback = (ImageView) findViewById(R.id.buyback);
-        text_details = (TextView) findViewById(R.id.text_details);
+        text_detail = (TextView) findViewById(R.id.text_detail);
+
         showback = (ImageView) findViewById(R.id.showback);
         Glide.with(this)
                 .load(image)
@@ -167,7 +168,7 @@ public class BuyTicketActivity extends AppCompatActivity implements View.OnClick
                             presenter = new BuyTicketPresentCompl(BuyTicketActivity.this);
                         }
                         presenter.showPlanText(data_show,show_plan,Integer.parseInt(Id),time);
-                        presenter.showDetail(image,name,buy_name,buy_type,buy_durtion,text_details);
+                        presenter.showDetail(image,name,buy_name,buy_type,buy_durtion,text_detail);
                         planrefresh.setRefreshing(false);
                     }
                 });

@@ -1,6 +1,9 @@
 package com.example.wtl.ttms_hdd.WaitToPay.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.wtl.ttms_hdd.PayMoney.view.PayMoneyActivity;
 import com.example.wtl.ttms_hdd.R;
 import com.example.wtl.ttms_hdd.WaitToPay.model.WaitDateModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,13 +51,17 @@ public class WaitPayAdapter extends RecyclerView.Adapter<WaitPayAdapter.ViewHold
         holder.tobuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context, PayMoneyActivity.class);
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.activity_left_in,R.anim.activity_left_out);
             }
         });
         holder.ticket_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context, PayMoneyActivity.class);
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.activity_left_in,R.anim.activity_left_out);
             }
         });
     }
